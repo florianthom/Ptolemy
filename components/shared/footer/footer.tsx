@@ -3,7 +3,7 @@ type Props = {};
 export default function Footer({}: Props) {
   return (
     <>
-      <footer>test</footer>
+      <footer className="footer">test</footer>
     </>
   );
 }
