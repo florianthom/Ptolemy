@@ -1,5 +1,7 @@
 import type { AppProps } from "next/app";
 import { ReactElement, ReactNode } from "react";
+import AppHtmlHeader from "../appheader/appheader";
+import Footer from "../footer/footer";
 
 type Props = {
   children: ReactNode;
@@ -8,9 +10,9 @@ type Props = {
 export default function Layout({ children }: Props) {
   return (
     <>
-      <div>header</div>
+      <AppHtmlHeader />
       <main>{children}</main>
-      <div>footer</div>
+      <Footer />
     </>
   );
 }
