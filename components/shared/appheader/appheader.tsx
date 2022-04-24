@@ -6,7 +6,7 @@ export default function AppHtmlHeader({}: Props) {
   return (
     <>
       <Head>
-        <title>Create Next App</title>
+        <title>Ptolemy</title>
         <meta
           name="Ptolemy"
           content="Different card visualizations with various tools"
