@@ -6,7 +6,7 @@ import Background from "../public/ptolemy.jpg";
 const Home: NextPage = () => {
   return (
     <>
-      <div className="flex justify-center items-center h-full pt-8">
+      <div className="flex justify-center items-center h-full py-8">
         <h1 className="text-4xl font-medium">Ptolemy: Maps based on Math</h1>
       </div>
 
