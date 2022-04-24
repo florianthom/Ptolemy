@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import Image from "next/image";
 import Background from "../public/ptolemy.jpg";
 
-const D3: NextPage = () => {
+const D3Page: NextPage = () => {
   return (
     <>
       <div className="flex justify-center items-center h-full py-8">
@@ -13,4 +13,4 @@ const D3: NextPage = () => {
   );
 };
 
-export default D3;
+export default D3Page;

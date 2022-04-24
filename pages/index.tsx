@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import Image from "next/image";
 import Background from "../public/ptolemy.jpg";
 
-const Home: NextPage = () => {
+const HomePage: NextPage = () => {
   return (
     <>
       <div className="flex justify-center items-center h-full py-8">
@@ -30,4 +30,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default HomePage;
