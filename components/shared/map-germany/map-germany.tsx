@@ -1,7 +1,13 @@
 import * as d3 from "d3";
 import { GeoPath } from "d3";
 import { useEffect, useRef } from "react";
-import { Feature, FeatureCollection } from "geojson";
+import {
+  Feature,
+  FeatureCollection,
+  Geometry,
+  GeoJsonProperties,
+} from "geojson";
+import { AppGeoJsonProperties } from "./geoJsonPropertyOpenDataLab";
 
 // d3 - base structure:
 //
@@ -23,6 +29,8 @@ import { Feature, FeatureCollection } from "geojson";
 // breitengrad = --- = latitude = lat = winkelmaß in Grad (°)
 // längengrad =  ||| = longitude
 // [13, 52.5] == [long, lat]== 13° östliche länge (bei minus = westliche länge) & 52.5° nördliche breite (bei minus = südliche breite)
+//
+// A geographic path generator is a function that takes a GeoJSON object and converts it into an SVG path string. (In fact, it’s just another type of shape generator.)
 
 type Props = {};
 
@@ -65,13 +73,42 @@ const drawChart = (svgRef: React.RefObject<SVGSVGElement>) => {
     .scale(10000)
     .translate([w / 2, h / 2]);
 
-  const processData = (rootData: FeatureCollection) => {
+  const processData = (
+    rootData: FeatureCollection<Geometry, AppGeoJsonProperties>
+  ) => {
     // console.log("data: ", rootData.features);
 
-    // A geographic path generator is a function that takes a GeoJSON object and converts it into an SVG path string. (In fact, it’s just another type of shape generator.)
     const geoGenerator: GeoPath<any, d3.GeoPermissibleObjects> = d3
       .geoPath()
       .projection(projection);
+
+    const mapPaths = g0
+      .append("g")
+      .selectAll(".mapPath")
+      .data(rootData.features)
+      .enter()
+      .append("path")
+      .attr("class", "mapPath")
+      // add html5 data attributes (is recommended: https://stackoverflow.com/questions/13188125/d3-add-multiple-classes-with-function/26022895)
+      .attr("gen", (data, index) => {
+        return data.properties.GEN;
+      })
+      .attr("d", (data: Feature) => {
+        return geoGenerator(data);
+      })
+      .attr("fill", (data, index) => color!(index))
+      .attr("stroke", "#FFF")
+      .attr("stroke-width", 0.5)
+      .on("mouseover", function (event, data) {
+        // @ts-ignore
+        const tmpElement = d3.select(this);
+        that.onMouseOverDistrictPath(tmpElement, data);
+      })
+      .on("mouseout", function (event, data) {
+        // @ts-ignore
+        const tmpElement = d3.select(this);
+        that.onMouseOutDistrictPath(tmpElement);
+      });
   };
 
   // @ts-ignore
