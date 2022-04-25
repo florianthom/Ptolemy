@@ -96,8 +96,8 @@ const drawChart = (svgRef: React.RefObject<SVGSVGElement>) => {
     .append("div")
     .attr("class", "gInformationWindowRect")
     .style("position", "absolute")
-    .style("left", margin.left + "px") //that.getXTooltip(this, that.tooltip, 0) + 'px')
-    .style("top", h + "px") //that.getYTooltip(this, that.tooltip, -10) + 'px')
+    .style("left", margin.left + "px")
+    .style("top", h + "px")
     .style("z-index", "10")
     .style("visibility", "hidden")
     .style("background-color", "white")
@@ -132,7 +132,6 @@ const drawChart = (svgRef: React.RefObject<SVGSVGElement>) => {
     rootData: FeatureCollection<Geometry, AppGeoJsonProperties>
   ) => {
     // console.log("data: ", rootData.features);
-
     const geoGenerator: GeoPath<any, d3.GeoPermissibleObjects> = d3
       .geoPath()
       .projection(projection);
@@ -166,25 +165,6 @@ const drawChart = (svgRef: React.RefObject<SVGSVGElement>) => {
 
   // @ts-ignore
   d3.json("landkreise_simplify200.geojson").then(constructMapFromData);
-
-  /////////////////////////////
-
-  svg
-    .attr("width", w)
-    .attr("height", h)
-    .style("margin-top", 50)
-    .style("margin-left", 50);
-
-  svg
-    .selectAll("rect")
-    .data(data)
-    .enter()
-    .append("rect")
-    .attr("x", (d, i) => i * 40)
-    .attr("y", (d, i) => h - 10 * d)
-    .attr("width", 20)
-    .attr("height", (d, i) => d * 10)
-    .attr("fill", "steelblue");
 };
 
 export default function MapGermany({}: Props) {
@@ -197,12 +177,14 @@ export default function MapGermany({}: Props) {
   return (
     <>
       <div id="body">
-        {/* <div id="btn-zoom">
+        <div id="btn-zoom">
           <button
             id="btn-zoom--in"
             className="k-icon k-i-zoom-in zoom-button same-height-width padding-5"
             aria-hidden="true"
-          ></button>
+          >
+            ++
+          </button>
           <button
             id="btn-zoom--out"
             className="k-icon k-i-zoom-out zoom-button same-height-width padding-5"
@@ -210,7 +192,7 @@ export default function MapGermany({}: Props) {
           >
             --
           </button>
-        </div> */}
+        </div>
         <div id="map">
           <svg ref={svg} />
         </div>
