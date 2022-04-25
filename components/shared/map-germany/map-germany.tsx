@@ -78,7 +78,6 @@ const drawChart = (svgRef: React.RefObject<SVGSVGElement>) => {
   const data = [12, 5, 6, 6, 9, 10];
 
   // constants
-  const that = this;
   const margin = { top: 10, right: 80, bottom: 75, left: 60 };
   const h = 700 - margin.top - margin.bottom;
   const w = 600 - margin.left - margin.right;
