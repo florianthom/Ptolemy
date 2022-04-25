@@ -9,6 +9,12 @@ import {
 } from "geojson";
 import { AppGeoJsonProperties } from "./geoJsonPropertyOpenDataLab";
 
+// zumachen
+// set size
+// go for country instead of state
+// color schema
+// zoom
+
 // d3 - base structure:
 //
 // selectAll(nameX) -> data -> enter -> append(g) -> attr(class, nameX)
