@@ -34,44 +34,45 @@ import { AppGeoJsonProperties } from "./geoJsonPropertyOpenDataLab";
 
 type Props = {};
 
-// function onMouseOverDistrictPath(
-//     pathElement: any,
-//     data: Feature
-//   ) {
-//     pathElement.attr('fill-opacity', 0.6);
-//     pathElement.attr('stroke-width', 2.5);
-//     this.tooltipDistrict
-//       .html(
-//         '<div>' +
-//           '<div>' +
-//           data.properties.BEZ +
-//           ': ' +
-//           data.properties.GEN +
-//           (data.properties.BEZ === 'Landkreis'
-//             ? ' (' + data.properties.SN_K + ')' + '</div>'
-//             : '</div>') +
-//           '<div>' +
-//           'Regionalschlüssel: ' +
-//           data.properties.SDV_RS +
-//           '</div>' +
-//           '<div>' +
-//           'Amtlicher Gemeindeschlüssel: ' +
-//           data.properties.AGS +
-//           '</div>' +
-//           '<div>' +
-//           'Europäischer Statistikschlüssel: ' +
-//           data.properties.NUTS +
-//           '</div>' +
-//           '</div>'
-//       )
-//       .style('visibility', 'visible');
-//   }
+const onMouseOverDistrictPath = (
+  pathElement: any,
+  data: Feature<Geometry, AppGeoJsonProperties>,
+  tooltipDistrict: any
+) => {
+  pathElement.attr("fill-opacity", 0.6);
+  pathElement.attr("stroke-width", 2.5);
+  tooltipDistrict
+    .html(
+      "<div>" +
+        "<div>" +
+        data.properties.BEZ +
+        ": " +
+        data.properties.GEN +
+        (data.properties.BEZ === "Landkreis"
+          ? " (" + data.properties.SN_K + ")" + "</div>"
+          : "</div>") +
+        "<div>" +
+        "Regionalschlüssel: " +
+        data.properties.SDV_RS +
+        "</div>" +
+        "<div>" +
+        "Amtlicher Gemeindeschlüssel: " +
+        data.properties.AGS +
+        "</div>" +
+        "<div>" +
+        "Europäischer Statistikschlüssel: " +
+        data.properties.NUTS +
+        "</div>" +
+        "</div>"
+    )
+    .style("visibility", "visible");
+};
 
-//   onMouseOutDistrictPath(pathElement: any) {
-//     pathElement.attr('fill-opacity', 1.0);
-//     pathElement.attr('stroke-width', 0.5);
-//     this.tooltipDistrict.style('visibility', 'hidden');
-//   }
+const onMouseOutDistrictPath = (pathElement: any, tooltipDistrict: any) => {
+  pathElement.attr("fill-opacity", 1.0);
+  pathElement.attr("stroke-width", 0.5);
+  tooltipDistrict.style("visibility", "hidden");
+};
 
 const drawChart = (svgRef: React.RefObject<SVGSVGElement>) => {
   const data = [12, 5, 6, 6, 9, 10];
@@ -90,6 +91,22 @@ const drawChart = (svgRef: React.RefObject<SVGSVGElement>) => {
     .attr("width", "100%")
     .attr("height", h + margin.top + margin.bottom)
     .attr("style", "outline: thin solid black;");
+
+  const tooltipDistrict = d3
+    .select("#map")
+    .append("div")
+    .attr("class", "gInformationWindowRect")
+    .style("position", "absolute")
+    .style("left", margin.left + "px") //that.getXTooltip(this, that.tooltip, 0) + 'px')
+    .style("top", h + "px") //that.getYTooltip(this, that.tooltip, -10) + 'px')
+    .style("z-index", "10")
+    .style("visibility", "hidden")
+    .style("background-color", "white")
+    .style("border", "solid")
+    .style("border-width", "1px")
+    .style("border-radius", "0px")
+    .style("padding", "5px")
+    .style("font-size", 12 + "px");
 
   const color = d3
     .scaleLinear()
@@ -112,7 +129,7 @@ const drawChart = (svgRef: React.RefObject<SVGSVGElement>) => {
     .scale(10000)
     .translate([w / 2, h / 2]);
 
-  const processData = (
+  const constructMapFromData = (
     rootData: FeatureCollection<Geometry, AppGeoJsonProperties>
   ) => {
     // console.log("data: ", rootData.features);
@@ -137,21 +154,19 @@ const drawChart = (svgRef: React.RefObject<SVGSVGElement>) => {
       })
       .attr("fill", (data, index) => color(index))
       .attr("stroke", "#FFF")
-      .attr("stroke-width", 0.5);
-    // .on("mouseover", function (event, data) {
-    //   // @ts-ignore
-    //   const tmpElement = d3.select(this);
-    //   onMouseOverDistrictPath(tmpElement, data);
-    // })
-    // .on("mouseout", function (event, data) {
-    //   // @ts-ignore
-    //   const tmpElement = d3.select(this);
-    //   that.onMouseOutDistrictPath(tmpElement);
-    // });
+      .attr("stroke-width", 0.5)
+      .on("mouseover", function (event, data) {
+        const tmpElement = d3.select(this);
+        onMouseOverDistrictPath(tmpElement, data, tooltipDistrict);
+      })
+      .on("mouseout", function (event, data) {
+        const tmpElement = d3.select(this);
+        onMouseOutDistrictPath(tmpElement, tooltipDistrict);
+      });
   };
 
   // @ts-ignore
-  d3.json("landkreise_simplify200.geojson").then(processData);
+  d3.json("landkreise_simplify200.geojson").then(constructMapFromData);
 
   /////////////////////////////
 
