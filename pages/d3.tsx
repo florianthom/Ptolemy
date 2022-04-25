@@ -1,14 +1,15 @@
-import { url } from "inspector";
 import type { NextPage } from "next";
-import Image from "next/image";
-import Background from "../public/ptolemy.jpg";
+import MapGermany from "../components/shared/map-germany/map-germany";
 
 const D3Page: NextPage = () => {
   return (
     <>
-      <div className="flex justify-center items-center h-full py-8">
+      <div className="flex justify-center py-8">
         <h1 className="text-4xl font-medium">D3.js: Data-Driven Documents</h1>
       </div>
+      {/* <div className="flex justify-center py-8"> */}
+      <MapGermany />
+      {/* </div> */}
     </>
   );
 };
