@@ -34,6 +34,45 @@ import { AppGeoJsonProperties } from "./geoJsonPropertyOpenDataLab";
 
 type Props = {};
 
+// function onMouseOverDistrictPath(
+//     pathElement: any,
+//     data: Feature
+//   ) {
+//     pathElement.attr('fill-opacity', 0.6);
+//     pathElement.attr('stroke-width', 2.5);
+//     this.tooltipDistrict
+//       .html(
+//         '<div>' +
+//           '<div>' +
+//           data.properties.BEZ +
+//           ': ' +
+//           data.properties.GEN +
+//           (data.properties.BEZ === 'Landkreis'
+//             ? ' (' + data.properties.SN_K + ')' + '</div>'
+//             : '</div>') +
+//           '<div>' +
+//           'Regionalschlüssel: ' +
+//           data.properties.SDV_RS +
+//           '</div>' +
+//           '<div>' +
+//           'Amtlicher Gemeindeschlüssel: ' +
+//           data.properties.AGS +
+//           '</div>' +
+//           '<div>' +
+//           'Europäischer Statistikschlüssel: ' +
+//           data.properties.NUTS +
+//           '</div>' +
+//           '</div>'
+//       )
+//       .style('visibility', 'visible');
+//   }
+
+//   onMouseOutDistrictPath(pathElement: any) {
+//     pathElement.attr('fill-opacity', 1.0);
+//     pathElement.attr('stroke-width', 0.5);
+//     this.tooltipDistrict.style('visibility', 'hidden');
+//   }
+
 const drawChart = (svgRef: React.RefObject<SVGSVGElement>) => {
   const data = [12, 5, 6, 6, 9, 10];
 
@@ -96,19 +135,19 @@ const drawChart = (svgRef: React.RefObject<SVGSVGElement>) => {
       .attr("d", (data: Feature) => {
         return geoGenerator(data);
       })
-      .attr("fill", (data, index) => color!(index))
+      .attr("fill", (data, index) => color(index))
       .attr("stroke", "#FFF")
-      .attr("stroke-width", 0.5)
-      .on("mouseover", function (event, data) {
-        // @ts-ignore
-        const tmpElement = d3.select(this);
-        that.onMouseOverDistrictPath(tmpElement, data);
-      })
-      .on("mouseout", function (event, data) {
-        // @ts-ignore
-        const tmpElement = d3.select(this);
-        that.onMouseOutDistrictPath(tmpElement);
-      });
+      .attr("stroke-width", 0.5);
+    // .on("mouseover", function (event, data) {
+    //   // @ts-ignore
+    //   const tmpElement = d3.select(this);
+    //   onMouseOverDistrictPath(tmpElement, data);
+    // })
+    // .on("mouseout", function (event, data) {
+    //   // @ts-ignore
+    //   const tmpElement = d3.select(this);
+    //   that.onMouseOutDistrictPath(tmpElement);
+    // });
   };
 
   // @ts-ignore
