@@ -34,7 +34,7 @@ export default function Footer({}: Props) {
 
         <div
           className="text-center text-gray-700 p-4"
-          style={{ backgroundColor: "rgba(0, 0, 0, 0.2);" }}
+          style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
         >
           © 2022 Copyright:{" "}
           <Link href="/">

@@ -14,6 +14,8 @@ import { AppGeoJsonProperties } from "./geoJsonPropertyOpenDataLab";
 // go for country instead of state
 // color schema
 // zoom
+// locations
+// map moovement
 
 // d3 - base structure:
 //
@@ -116,8 +118,7 @@ const drawChart = (svgRef: React.RefObject<SVGSVGElement>) => {
   const color = d3
     .scaleLinear()
     .domain([1, 20])
-    // @ts-ignore
-    .range(["#DCDCDC", "#C0C0C0"]);
+    .range(["lightblue", "steelblue"] as Iterable<number>); // ["#DCDCDC", "#C0C0C0"]
 
   const g0 = svg
     .append("g")
@@ -182,21 +183,13 @@ export default function MapGermany({}: Props) {
 
   return (
     <>
-      <div id="body">
+      <div id="body" className="p-16">
         <div id="btn-zoom">
-          <button
-            id="btn-zoom--in"
-            className="k-icon k-i-zoom-in zoom-button same-height-width padding-5"
-            aria-hidden="true"
-          >
-            ++
+          <button id="btn-zoom--in" className="zoom-button h-12 w-12 p-5">
+            +
           </button>
-          <button
-            id="btn-zoom--out"
-            className="k-icon k-i-zoom-out zoom-button same-height-width padding-5"
-            aria-hidden="true"
-          >
-            --
+          <button id="btn-zoom--out" className="zoom-button h-12 w-12 p-5">
+            -
           </button>
         </div>
         <div id="map">
