@@ -11,9 +11,9 @@ import {
 import { GeoPath } from "d3";
 
 export const createChart = (svgRef: React.RefObject<SVGSVGElement>) => {
-  const data = [12, 5, 6, 6, 9, 10];
+  // needed since component gets rendered >1 times (?)
+  d3.select(svgRef.current).selectAll("*").remove();
 
-  // initialization
   const svg = d3
     .select(svgRef.current)
     .attr("class", "svg-class")
@@ -29,6 +29,7 @@ export const createChart = (svgRef: React.RefObject<SVGSVGElement>) => {
 
   const g0 = svg
     .append("g")
+    .attr("class", "g-base")
     .attr(
       "transform",
       "translate(" + MS.MARGIN.LEFT + "," + MS.MARGIN.TOP + ")"

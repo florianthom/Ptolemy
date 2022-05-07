@@ -4,6 +4,7 @@ import Image from "next/image";
 import Background from "../public/ptolemy.jpg";
 
 const HomePage: NextPage = () => {
+  console.log("rendered");
   return (
     <>
       <div className="flex justify-center items-center h-full py-8">
@@ -21,11 +22,6 @@ const HomePage: NextPage = () => {
           objectFit="contain"
         />
       </div>
-
-      {/* <div
-        className="h-screen bg-cover bg-no-repeat bg-center"
-        style={{ backgroundImage: `url(${Background.src})` }}
-      ></div> */}
     </>
   );
 };

@@ -1,13 +1,10 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createChart } from "./createChart";
 
 // zumachen
-// set size
 // go for country instead of state
-// color schema
 // zoom
 // locations
-// map moovement
 
 // d3 - base structure:
 //
@@ -37,9 +34,16 @@ type Props = {};
 export default function WorldMap({}: Props) {
   const svg = useRef<SVGSVGElement>(null);
 
+  const [isMounted, setIsMounted] = useState(false);
+
   useEffect(() => {
+    setIsMounted(false && isMounted);
     createChart(svg);
   }, [svg]);
+
+  if (isMounted) {
+    return null;
+  }
 
   return (
     <>
