@@ -3,8 +3,8 @@ import ButtonsZooming from "./ButtonsZooming";
 import { createChart } from "./createChart";
 
 // zumachen
-// go for country instead of state
-// locations
+// go for world instead of state
+// display several locations via locator-symbol
 
 // d3 - base structure:
 //
