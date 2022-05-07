@@ -66,5 +66,5 @@ export const createTooltipDistrict = () => {
     .style("border-width", "1px")
     .style("border-radius", "0px")
     .style("padding", "5px")
-    .style("font-size", 12 + "px");
+    .style("font-size", MS.FONTSIZE + "px");
 };

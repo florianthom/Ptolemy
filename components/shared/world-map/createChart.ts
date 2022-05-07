@@ -8,7 +8,7 @@ import {
   onMouseOutDistrictPath,
   onMouseOverDistrictPath,
 } from "./mapTooltip";
-import { GeoPath } from "d3";
+import { GeoPath, GeoPermissibleObjects } from "d3";
 
 export const createChart = (svgRef: React.RefObject<SVGSVGElement>) => {
   // needed since component gets rendered >1 times (?)
@@ -16,11 +16,9 @@ export const createChart = (svgRef: React.RefObject<SVGSVGElement>) => {
 
   const svg = d3
     .select(svgRef.current)
-    .attr("class", "svg-class")
     .attr("width", MS.WIDTH + MS.MARGIN.LEFT + MS.MARGIN.RIGHT)
     // .attr("width", "100%")
-    .attr("height", MS.HEIGHT + MS.MARGIN.TOP + MS.MARGIN.BOTTOM)
-    .attr("style", "outline: thin solid black;");
+    .attr("height", MS.HEIGHT + MS.MARGIN.TOP + MS.MARGIN.BOTTOM);
 
   const color = d3
     .scaleLinear()
@@ -52,7 +50,7 @@ export const createChart = (svgRef: React.RefObject<SVGSVGElement>) => {
     rootData: FeatureCollection<Geometry, AppGeoJsonProperties>
   ) => {
     // console.log("data: ", rootData.features);
-    const geoGenerator: GeoPath<any, d3.GeoPermissibleObjects> = d3
+    const geoGenerator: GeoPath<any, GeoPermissibleObjects> = d3
       .geoPath()
       .projection(projection);
 

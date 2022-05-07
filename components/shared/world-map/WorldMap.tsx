@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import ButtonsZooming from "./ButtonsZooming";
 import { createChart } from "./createChart";
 
 // zumachen
@@ -34,36 +35,16 @@ type Props = {};
 export default function WorldMap({}: Props) {
   const svg = useRef<SVGSVGElement>(null);
 
-  const [isMounted, setIsMounted] = useState(false);
-
   useEffect(() => {
-    setIsMounted(false && isMounted);
     createChart(svg);
   }, [svg]);
 
-  if (isMounted) {
-    return null;
-  }
-
   return (
     <>
-      <div id="body" className="p-16">
-        <div className="absolute top-50 left-20 z-10">
-          <button
-            id="btn-zoom-in"
-            className="border-2 bg-transparent cursor-pointer text-2xl h-12 w-12 m-5"
-          >
-            +
-          </button>
-          <button
-            id="btn-zoom-out"
-            className="border-2 bg-transparent cursor-pointer text-2xl h-12 w-12 m-5"
-          >
-            -
-          </button>
-        </div>
+      <div id="body" className="relative p-16">
+        <ButtonsZooming />
         <div id="map">
-          <svg ref={svg} />
+          <svg ref={svg} className="outline outline-1" />
         </div>
       </div>
     </>

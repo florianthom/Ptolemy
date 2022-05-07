@@ -8,9 +8,9 @@ const D3Page: NextPage = () => {
       <div className="flex justify-center py-8">
         <h1 className="text-4xl font-medium">D3.js: Data-Driven Documents</h1>
       </div>
-      {/* <ConditionallyRender client> */}
-      <WorldMap />
-      {/* </ConditionallyRender> */}
+      <div className="flex justify-center">
+        <WorldMap />
+      </div>
     </>
   );
 };
