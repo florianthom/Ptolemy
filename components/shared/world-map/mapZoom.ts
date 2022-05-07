@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { ZoomBehavior, Selection } from "d3";
+import { ZoomBehavior, Selection, ZoomedElementBaseType } from "d3";
 import { MapSettings as MS } from "./mapSettings";
 
 export function registerButtonZoomHandler(
@@ -23,20 +23,21 @@ export function clickToZoom(
   svg.transition().duration(MS.ZOOM_DURATION).call(zoomer.scaleBy, zoomStep);
 }
 
-export function createZoomer(g0: any): ZoomBehavior<Element, unknown> {
-  return (
-    d3
-      .zoom()
-      .scaleExtent(MS.ZOOM_THRESHOLD)
-      .translateExtent([
-        // from x, from y
-        [-500, -500],
-        // to x, to y
-        [1000, 1250],
-      ])
-      // call function to actually zoom
-      .on("zoom", (event) => onZoom(g0, event))
-  );
+// private zoomer: ZoomBehavior<ZoomedElementBaseType, unknown> | undefined;
+
+export function createZoomer(g0: any) {
+  const zoomer = d3
+    .zoom()
+    .scaleExtent(MS.ZOOM_THRESHOLD)
+    .translateExtent([
+      // from x, from y
+      [-500, -500],
+      // to x, to y
+      [1000, 1250],
+    ])
+    // call function to actually zoom
+    .on("zoom", (event) => onZoom(g0, event));
+  return zoomer;
 }
 
 // sometimes also called zoomed / redraw

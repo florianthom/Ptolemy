@@ -16,22 +16,10 @@ import {
 } from "./mapTooltip";
 import { GeoPath } from "d3";
 
-export const createChart1 = (svgRef: any) => {
-  console.log(svgRef.current);
-  const svg = d3
-    ?.select(svgRef.current)
-    .attr("class", "svg-class")
-    .attr("width", MS.WIDTH + MS.MARGIN.LEFT + MS.MARGIN.RIGHT)
-    .attr("width", "100%")
-    .attr("height", MS.HEIGHT + MS.MARGIN.TOP + MS.MARGIN.BOTTOM)
-    .attr("style", "outline: thin solid black;");
-};
-
 export const createChart = (svgRef: React.RefObject<SVGSVGElement>) => {
   const data = [12, 5, 6, 6, 9, 10];
 
   // initialization
-  console.log(d3);
   const svg = d3
     .select(svgRef.current)
     .attr("class", "svg-class")
@@ -56,6 +44,18 @@ export const createChart = (svgRef: React.RefObject<SVGSVGElement>) => {
 
   // define general zoom object
   const zoomer = createZoomer(g0);
+
+  // needed to install zoom
+  svg.call(zoomer as any);
+
+  // attention: this function call has to be after the g1 creation (otherwise there is no transform attribute)
+  // needed to adjust init zoom position (we translated <g> a a bit, but d3 does not now that, so we have to adjust zoom a bit
+  // to tell d3 where the <g> currently is)
+  svg.call(
+    zoomer.transform as any,
+    () => d3.zoomIdentity.translate(929, 100)
+    // d3.zoomIdentity.translate(MS.MARGIN.LEFT, MS.MARGIN.TOP)
+  );
 
   registerButtonZoomHandler(svg, zoomer);
 
