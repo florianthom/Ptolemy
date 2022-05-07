@@ -1,7 +1,6 @@
-import d3 from "d3";
 import { useEffect, useRef } from "react";
+import * as d3 from "d3";
 import { createChart } from "./createChart";
-import { MapSettings as MS } from "./mapSettings";
 
 // zumachen
 // set size
@@ -37,18 +36,11 @@ import { MapSettings as MS } from "./mapSettings";
 type Props = {};
 
 export default function WorldMap({}: Props) {
-  const svgRef = useRef<SVGSVGElement>(null);
+  const svg = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
-    const svg = d3
-      .select(svgRef.current)
-      .attr("class", "svg-class")
-      .attr("width", MS.WIDTH + MS.MARGIN.LEFT + MS.MARGIN.RIGHT)
-      .attr("width", "100%")
-      .attr("height", MS.HEIGHT + MS.MARGIN.TOP + MS.MARGIN.BOTTOM)
-      .attr("style", "outline: thin solid black;");
     createChart(svg);
-  }, [svgRef]);
+  }, [svg]);
 
   return (
     <>
@@ -68,7 +60,7 @@ export default function WorldMap({}: Props) {
           </button>
         </div>
         <div id="map">
-          <svg ref={svgRef} />
+          <svg ref={svg} />
         </div>
       </div>
     </>

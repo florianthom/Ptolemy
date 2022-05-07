@@ -1,4 +1,5 @@
-import d3, { ZoomBehavior, Selection } from "d3";
+import * as d3 from "d3";
+import { ZoomBehavior, Selection } from "d3";
 import { MapSettings as MS } from "./mapSettings";
 
 export function registerButtonZoomHandler(

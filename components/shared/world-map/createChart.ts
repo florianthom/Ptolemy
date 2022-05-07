@@ -1,4 +1,5 @@
-import d3, { GeoPath, ZoomBehavior, ZoomedElementBaseType } from "d3";
+// import d3, { GeoPath, ZoomBehavior, ZoomedElementBaseType } from "d3";
+import * as d3 from "d3";
 import { MapSettings as MS } from "./mapSettings";
 import {
   Feature,
@@ -13,9 +14,31 @@ import {
   onMouseOutDistrictPath,
   onMouseOverDistrictPath,
 } from "./mapTooltip";
+import { GeoPath } from "d3";
 
-export const createChart = (svgRef: any) => {
+export const createChart1 = (svgRef: any) => {
+  console.log(svgRef.current);
+  const svg = d3
+    ?.select(svgRef.current)
+    .attr("class", "svg-class")
+    .attr("width", MS.WIDTH + MS.MARGIN.LEFT + MS.MARGIN.RIGHT)
+    .attr("width", "100%")
+    .attr("height", MS.HEIGHT + MS.MARGIN.TOP + MS.MARGIN.BOTTOM)
+    .attr("style", "outline: thin solid black;");
+};
+
+export const createChart = (svgRef: React.RefObject<SVGSVGElement>) => {
   const data = [12, 5, 6, 6, 9, 10];
+
+  // initialization
+  console.log(d3);
+  const svg = d3
+    .select(svgRef.current)
+    .attr("class", "svg-class")
+    .attr("width", MS.WIDTH + MS.MARGIN.LEFT + MS.MARGIN.RIGHT)
+    .attr("width", "100%")
+    .attr("height", MS.HEIGHT + MS.MARGIN.TOP + MS.MARGIN.BOTTOM)
+    .attr("style", "outline: thin solid black;");
 
   const color = d3
     .scaleLinear()
