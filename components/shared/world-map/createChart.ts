@@ -1,14 +1,8 @@
-// import d3, { GeoPath, ZoomBehavior, ZoomedElementBaseType } from "d3";
 import * as d3 from "d3";
 import { MapSettings as MS } from "./mapSettings";
-import {
-  Feature,
-  FeatureCollection,
-  Geometry,
-  GeoJsonProperties,
-} from "geojson";
+import { Feature, FeatureCollection, Geometry } from "geojson";
 import { AppGeoJsonProperties } from "./geoJsonPropertyOpenDataLab";
-import { createZoomer, registerButtonZoomHandler } from "./mapZoom";
+import { installZooming } from "./mapZoom";
 import {
   createTooltipDistrict,
   onMouseOutDistrictPath,
@@ -24,7 +18,7 @@ export const createChart = (svgRef: React.RefObject<SVGSVGElement>) => {
     .select(svgRef.current)
     .attr("class", "svg-class")
     .attr("width", MS.WIDTH + MS.MARGIN.LEFT + MS.MARGIN.RIGHT)
-    .attr("width", "100%")
+    // .attr("width", "100%")
     .attr("height", MS.HEIGHT + MS.MARGIN.TOP + MS.MARGIN.BOTTOM)
     .attr("style", "outline: thin solid black;");
 
@@ -42,31 +36,15 @@ export const createChart = (svgRef: React.RefObject<SVGSVGElement>) => {
 
   const tooltipDistrict = createTooltipDistrict();
 
-  // define general zoom object
-  const zoomer = createZoomer(g0);
+  installZooming(svg, g0);
 
-  // needed to install zoom
-  svg.call(zoomer as any);
-
-  // attention: this function call has to be after the g1 creation (otherwise there is no transform attribute)
-  // needed to adjust init zoom position (we translated <g> a a bit, but d3 does not now that, so we have to adjust zoom a bit
-  // to tell d3 where the <g> currently is)
-  svg.call(
-    zoomer.transform as any,
-    () => d3.zoomIdentity.translate(929, 100)
-    // d3.zoomIdentity.translate(MS.MARGIN.LEFT, MS.MARGIN.TOP)
-  );
-
-  registerButtonZoomHandler(svg, zoomer);
-
-  // draw map
   const projection = d3
     .geoMercator()
     // .geoOrthographic()
     // coordinates of location which should be centered at start
     .center([13, 52.5])
     // zoom
-    .scale(10000)
+    .scale(9000)
     .translate([MS.WIDTH / 2, MS.HEIGHT / 2]);
 
   const constructMapFromData = (

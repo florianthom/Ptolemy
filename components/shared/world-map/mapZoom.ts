@@ -2,42 +2,39 @@ import * as d3 from "d3";
 import { ZoomBehavior, Selection, ZoomedElementBaseType } from "d3";
 import { MapSettings as MS } from "./mapSettings";
 
-export function registerButtonZoomHandler(
-  svg: any,
-  zoomer: ZoomBehavior<Element, unknown>
-) {
-  d3.select("#btn-zoom--in").on("click", () =>
-    clickToZoom(svg, zoomer, MS.ZOOM_OUT_STEP)
-  );
-  d3.select("#btn-zoom--out").on("click", () =>
-    clickToZoom(svg, zoomer, MS.ZOOM_OUT_STEP)
-  );
-}
-
-export function clickToZoom(
-  svg: Selection<SVGSVGElement | null, unknown, null, undefined>,
-  zoomer: ZoomBehavior<Element, unknown>,
-  zoomStep: number
-) {
-  // @ts-ignore
-  svg.transition().duration(MS.ZOOM_DURATION).call(zoomer.scaleBy, zoomStep);
-}
-
-// private zoomer: ZoomBehavior<ZoomedElementBaseType, unknown> | undefined;
-
-export function createZoomer(g0: any) {
-  const zoomer = d3
+export const installZooming = (svg: any, g0: any) => {
+  const zoomBehavior = d3
     .zoom()
     .scaleExtent(MS.ZOOM_THRESHOLD)
-    .translateExtent([
-      // from x, from y
-      [-500, -500],
-      // to x, to y
-      [1000, 1250],
-    ])
-    // call function to actually zoom
     .on("zoom", (event) => onZoom(g0, event));
-  return zoomer;
+
+  // call has to be after the g0 got created
+  // adjust init zoom position since <g>-adjustment
+  // svg.call
+  zoomBehavior.transform(
+    svg,
+    d3.zoomIdentity.translate(MS.MARGIN.LEFT, MS.MARGIN.TOP)
+  );
+
+  svg.call(zoomBehavior as any);
+
+  registerButtonZoomHandler(svg, zoomBehavior);
+};
+
+export const registerButtonZoomHandler = (
+  svg: any,
+  zoomer: ZoomBehavior<Element, unknown>
+) => {
+  d3.select("#btn-zoom-in").on("click", () =>
+    clickToZoom(svg, zoomer, MS.ZOOM_IN_STEP)
+  );
+  d3.select("#btn-zoom-out").on("click", () =>
+    clickToZoom(svg, zoomer, MS.ZOOM_OUT_STEP)
+  );
+};
+
+export function clickToZoom(svg: any, zoomer: any, zoomStep: number) {
+  svg.transition().duration(MS.ZOOM_DURATION).call(zoomer.scaleBy, zoomStep);
 }
 
 // sometimes also called zoomed / redraw
