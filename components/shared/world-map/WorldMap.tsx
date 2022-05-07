@@ -4,7 +4,6 @@ import { createChart } from "./createChart";
 
 // zumachen
 // go for country instead of state
-// zoom
 // locations
 
 // d3 - base structure:
@@ -20,6 +19,7 @@ import { createChart } from "./createChart";
 // maps + d3.js-geo: most basic facts
 //
 // geojson vs topojson -> topojson is optimized
+// geojson here
 // geojson = (lat,long) pairs
 //
 // projection
@@ -41,11 +41,9 @@ export default function WorldMap({}: Props) {
 
   return (
     <>
-      <div id="body" className="relative p-16">
+      <div id="map" className="relative">
         <ButtonsZooming />
-        <div id="map">
-          <svg ref={svg} className="outline outline-1" />
-        </div>
+        <svg ref={svg} className="outline outline-1" />
       </div>
     </>
   );

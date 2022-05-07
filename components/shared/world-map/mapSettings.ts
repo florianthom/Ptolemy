@@ -8,4 +8,8 @@ export class MapSettings {
   static readonly WIDTH: number = 1400 - this.MARGIN.LEFT - this.MARGIN.RIGHT;
   static readonly MARKER_SIZE: number = 7.5;
   static readonly FONTSIZE: number = 12;
+  static readonly TOOLTIP_MARGIN = {
+    TOP: (9 / 10) * this.HEIGHT,
+    LEFT: (1 / 10) * this.WIDTH,
+  };
 }
