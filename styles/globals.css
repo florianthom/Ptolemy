@@ -13,25 +13,3 @@ body {
 .container {
   padding: 0 2rem;
 }
-
-#btn-zoom {
-  position: absolute;
-  top: 45px;
-  left: 10px;
-  z-index: 10;
-  padding: 20px;
-}
-
-.same-height-width {
-  width: 3rem;
-  height: 3rem;
-}
-
-.zoom-button {
-  border-radius: 1px;
-  /* border: none; */
-  background-color: rgba(0, 0, 0, 0);
-  /* cursor: pointer; */
-  margin-left: 10px;
-  font-size: 25px;
-}
