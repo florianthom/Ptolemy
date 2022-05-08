@@ -82,7 +82,7 @@ export function getXTooltip(
   adjustment: number
 ): number {
   return (
-    // window.pageXOffset +
+    window.pageXOffset +
     currentObject.getBoundingClientRect().x +
     adjustment -
     tooltipSelection.node().getBoundingClientRect().width / 2 +

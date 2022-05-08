@@ -31,18 +31,18 @@ export const installZooming = (svg: any, g0: any) => {
 // pseudo-semantic-scaling = rescaling of radius of circles/fontsize of text/...
 // semantic-scaling = zooming without lines / strokes / ... gets bigger
 // for proper semantic scaling see https://stackoverflow.com/questions/21344340/semantic-zooming-of-the-force-directed-graph-in-d3
-function pseudoSemanticScale(event: any, element: any) {
+function pseudoSemanticScale(event: any, elements: any) {
   // rescale marker always except when panning since to much calculations (which are not needed since no rescaling required)
   if (
     event.sourceEvent == null ||
     (event.sourceEvent.movementX === 0 && event.sourceEvent.movementY === 0)
   ) {
-    element
-      ?.attr("r", () => {
-        // event.transform.k = zoom scale
-        return MS.MARKER_SIZE / Math.max(1, event.transform.k);
-      })
-      .attr("font-size", MS.TOOLTIP_FONTSIZE / Math.max(1, event.transform.k));
+    //   element
+    //     ?.attr("r", () => {
+    //       // event.transform.k = zoom scale
+    //       return MS.MARKER_SIZE / Math.max(1, event.transform.k);
+    //     })
+    //     .attr("font-size", MS.TOOLTIP_FONTSIZE / Math.max(1, event.transform.k));
   }
 }
 
