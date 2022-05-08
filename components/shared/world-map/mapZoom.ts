@@ -12,8 +12,6 @@ export const installZooming = (svg: any, g0: any) => {
       pseudoSemanticScale(event, null, null);
     });
 
-  // .on("zoom", (event) => onZoom(g0, event, null, null));
-
   // call has to be after the g0 got created
   // adjust init zoom position since <g>-adjustment
   // svg.call

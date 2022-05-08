@@ -1,4 +1,4 @@
-export interface AppGeoJsonProperties {
+export interface AppGeoJson {
   // source: Geojson-Maps
   // url: https://geojson-maps.ash.ms/
 

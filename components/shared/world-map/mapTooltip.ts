@@ -1,11 +1,11 @@
 import * as d3 from "d3";
 import { Feature, Geometry } from "geojson";
 import { MapSettings as MS } from "./mapSettings";
-import { AppGeoJsonProperties } from "./AppGeoJson";
+import { AppGeoJson } from "./AppGeoJson";
 
 export const onMouseOverDistrictPath = (
   pathElement: any,
-  data: Feature<Geometry, AppGeoJsonProperties>,
+  data: Feature<Geometry, AppGeoJson>,
   tooltipDistrict: any
 ) => {
   pathElement.attr("fill-opacity", 0.6);

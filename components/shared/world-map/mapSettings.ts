@@ -12,7 +12,7 @@ export class MapSettings {
     TOP: (8 / 10) * this.HEIGHT,
     LEFT: (1 / 10) * this.WIDTH,
   };
-  static readonly NUMBER_COLORS: number = 100;
+  static readonly MAX_NUMBER_COLORS: number = 100;
   static readonly PATH_COLOR: string = "#FFF";
   static readonly PATH_STROKE_WIDTH: number = 0.5;
 }
