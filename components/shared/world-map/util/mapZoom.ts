@@ -37,12 +37,13 @@ function pseudoSemanticScale(event: any, elements: any) {
     event.sourceEvent == null ||
     (event.sourceEvent.movementX === 0 && event.sourceEvent.movementY === 0)
   ) {
-    //   element
-    //     ?.attr("r", () => {
-    //       // event.transform.k = zoom scale
-    //       return MS.MARKER_SIZE / Math.max(1, event.transform.k);
-    //     })
-    //     .attr("font-size", MS.TOOLTIP_FONTSIZE / Math.max(1, event.transform.k));
+    // event.transform.k = zoom scale
+    elements
+      ?.attr("r", () => MS.MARKER_SIZE / Math.max(1, event.transform.k))
+      .attr(
+        "font-size",
+        () => MS.TOOLTIP_FONTSIZE / Math.max(1, event.transform.k)
+      );
   }
 }
 
