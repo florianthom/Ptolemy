@@ -11,6 +11,14 @@ import { GeoPath, GeoPermissibleObjects } from "d3";
 import { AppGeoJson } from "./AppGeoJson";
 import { geoGenerator } from "./mapCalculations";
 
+function createColorScale() {
+  const colorScale = d3
+    .scaleLinear()
+    .domain([1, MS.MAX_NUMBER_COLORS])
+    .range(["lightblue", "steelblue"] as Iterable<number>); // ["#DCDCDC", "#C0C0C0"]
+  return colorScale;
+}
+
 export function createChart(svgRef: React.RefObject<SVGSVGElement>) {
   // needed since component gets rendered >1 times (?)
   d3.select(svgRef.current).selectAll("*").remove();
@@ -34,11 +42,6 @@ export function createChart(svgRef: React.RefObject<SVGSVGElement>) {
   function renderMapPaths(rootData: FeatureCollection<Geometry, AppGeoJson>) {
     // console.log("data: ", rootData.features.length);
 
-    const color = d3
-      .scaleLinear()
-      .domain([1, MS.MAX_NUMBER_COLORS])
-      .range(["lightblue", "steelblue"] as Iterable<number>); // ["#DCDCDC", "#C0C0C0"]
-
     const tooltipDistrict = createTooltipDistrict();
 
     const mapPaths = g0
@@ -56,7 +59,9 @@ export function createChart(svgRef: React.RefObject<SVGSVGElement>) {
       .attr("d", (data: Feature) => {
         return geoGenerator(data);
       })
-      .attr("fill", (data, index) => color(index % MS.MAX_NUMBER_COLORS))
+      .attr("fill", (data, index) =>
+        createColorScale()(index % MS.MAX_NUMBER_COLORS)
+      )
       .attr("stroke", MS.PATH_COLOR)
       .attr("stroke-width", MS.PATH_STROKE_WIDTH)
       .on("mouseover", function (event, data) {
@@ -66,6 +71,32 @@ export function createChart(svgRef: React.RefObject<SVGSVGElement>) {
       .on("mouseout", function (event, data) {
         const tmpElement = d3.select(this);
         onMouseOutDistrictPath(tmpElement, tooltipDistrict);
+      });
+
+    const gCountryNameTextElements = g0
+      .append("g")
+      .selectAll(".mapCountryText")
+      .data(rootData.features)
+      .enter()
+      .append("text")
+      .attr("class", "mapCountryText")
+      .attr("transform", (datum: Feature) => {
+        const xyDatum: [number, number] = geoGenerator.centroid(datum);
+        const xyDelta =
+          MS.ADJUST_TEXTFIELD_COUNTRY[datum.properties!.sovereignt];
+        if (xyDelta) {
+          xyDatum[0] *= xyDelta[0];
+          xyDatum[1] *= xyDelta[1];
+          return `translate(${xyDatum})`;
+        }
+        return `translate(${xyDatum})`;
+      })
+
+      .attr("text-anchor", "middle")
+      .attr("font-size", MS.FONTSIZE)
+      .attr("cursor", "pointer")
+      .text((datum: Feature) => {
+        return datum.properties!.sovereignt;
       });
   }
 

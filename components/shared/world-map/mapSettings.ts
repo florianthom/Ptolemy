@@ -7,7 +7,8 @@ export class MapSettings {
   static readonly HEIGHT: number = 700 - this.MARGIN.TOP - this.MARGIN.BOTTOM;
   static readonly WIDTH: number = 1400 - this.MARGIN.LEFT - this.MARGIN.RIGHT;
   static readonly MARKER_SIZE: number = 7.5;
-  static readonly FONTSIZE: number = 12;
+  static readonly TOOLTIP_FONTSIZE: number = 12;
+  static readonly FONTSIZE: number = 6;
   static readonly TOOLTIP_MARGIN = {
     TOP: (8 / 10) * this.HEIGHT,
     LEFT: (1 / 10) * this.WIDTH,
@@ -15,4 +16,7 @@ export class MapSettings {
   static readonly MAX_NUMBER_COLORS: number = 100;
   static readonly PATH_COLOR: string = "#FFF";
   static readonly PATH_STROKE_WIDTH: number = 0.5;
+  static readonly ADJUST_TEXTFIELD_COUNTRY = {
+    "United States of America": [0.75, 1.5],
+  };
 }

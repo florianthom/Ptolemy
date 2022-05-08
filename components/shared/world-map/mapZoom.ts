@@ -41,7 +41,7 @@ function pseudoSemanticScale(event: any, markers: any, markersText: any) {
     });
     markersText?.attr(
       "font-size",
-      MS.FONTSIZE / Math.max(1, event.transform.k)
+      MS.TOOLTIP_FONTSIZE / Math.max(1, event.transform.k)
     );
   }
 }
