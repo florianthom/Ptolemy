@@ -5,7 +5,7 @@ import { MapSettings as MS } from "./mapSettings";
 export const installZooming = (svg: any, g0: any) => {
   const zoomBehavior = d3
     .zoom()
-    .scaleExtent(MS.ZOOM_THRESHOLD)
+    .scaleExtent(MS.ZOOM_MIN_MAX_THRESHOLD)
     .on("zoom", (event) => {
       // onZoom (also called zoomed / redraw)
       g0.attr("transform", event.transform);
@@ -27,6 +27,7 @@ export const installZooming = (svg: any, g0: any) => {
   registerButtonZoomHandler(svg, zoomBehavior);
 };
 
+// currently no scaling applied here since no marker
 // pseudo-semantic-scaling = rescaling of radius of circles/fontsize of text/...
 // semantic-scaling = zooming without lines / strokes / ... gets bigger
 // for proper semantic scaling see https://stackoverflow.com/questions/21344340/semantic-zooming-of-the-force-directed-graph-in-d3

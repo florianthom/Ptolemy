@@ -1,7 +1,1 @@
 source ico: https://www.shareicon.net/earth-maps-symbol-maps-and-flags-earth-icons-continents-shape-map-grid-674866
-
-geojson world data:
-
-source: https://geojson-maps.ash.ms/
-inspect json: https://jsoninspect.com/
-inspect data: https://geojson.io/#map=6/45.344/5.120

@@ -1,12 +1,7 @@
 import * as d3 from "d3";
-import {
-  Feature,
-  FeatureCollection,
-  Geometry,
-  GeoJsonProperties,
-} from "geojson";
-import { AppGeoJsonProperties } from "./geoJsonPropertyOpenDataLab";
+import { Feature, Geometry } from "geojson";
 import { MapSettings as MS } from "./mapSettings";
+import { AppGeoJsonProperties } from "./AppGeoJson";
 
 export const onMouseOverDistrictPath = (
   pathElement: any,
@@ -14,28 +9,38 @@ export const onMouseOverDistrictPath = (
   tooltipDistrict: any
 ) => {
   pathElement.attr("fill-opacity", 0.6);
-  pathElement.attr("stroke-width", 2.5);
+  pathElement.attr("stroke-width", 5 * MS.PATH_STROKE_WIDTH);
   tooltipDistrict
     .html(
       "<div>" +
         "<div>" +
-        data.properties.BEZ +
-        ": " +
-        data.properties.GEN +
-        (data.properties.BEZ === "Landkreis"
-          ? " (" + data.properties.SN_K + ")" + "</div>"
-          : "</div>") +
-        "<div>" +
-        "Regionalschlüssel: " +
-        data.properties.SDV_RS +
+        "Name: " +
+        data.properties.sovereignt +
+        "</div>" +
+        "Formal-Name: " +
+        data.properties.formal_en +
+        "</div>" +
+        "Acronym: " +
+        data.properties.sov_a3 +
         "</div>" +
         "<div>" +
-        "Amtlicher Gemeindeschlüssel: " +
-        data.properties.AGS +
+        "Subregion: " +
+        data.properties.subregion +
+        "</div>" +
+        "Continent: " +
+        data.properties.continent +
         "</div>" +
         "<div>" +
-        "Europäischer Statistikschlüssel: " +
-        data.properties.NUTS +
+        "Population: " +
+        data.properties.pop_est +
+        "</div>" +
+        "<div>" +
+        "Income Group: " +
+        data.properties.income_grp +
+        "</div>" +
+        "<div>" +
+        "Economy: " +
+        data.properties.economy +
         "</div>" +
         "</div>"
     )
@@ -47,7 +52,7 @@ export const onMouseOutDistrictPath = (
   tooltipDistrict: any
 ) => {
   pathElement.attr("fill-opacity", 1.0);
-  pathElement.attr("stroke-width", 0.5);
+  pathElement.attr("stroke-width", MS.PATH_STROKE_WIDTH);
   tooltipDistrict.style("visibility", "hidden");
 };
 
