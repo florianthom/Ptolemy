@@ -1,7 +1,5 @@
 import type { NextPage } from "next";
-import ConditionallyRender from "../components/shared/conditionally-render/ConditionallyRender";
 import LeafletMap from "../components/shared/leaflet-map/LeafletMap";
-import WorldMap from "../components/shared/world-map/WorldMap";
 
 const D3Page: NextPage = () => {
   return (
