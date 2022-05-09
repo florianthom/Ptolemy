@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import MinimapBounds from "./MinimapBounds";
 
-type Props = { position: number[]; zoom: number };
+type Props = { position: string; zoom: number };
 
 export default function LeafletMap({ position, zoom }: Props) {
   useEffect(() => {}, []);
