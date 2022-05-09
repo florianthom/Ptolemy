@@ -21,12 +21,24 @@ export default function LeafletMap({}: Props) {
 
   const initialCenter: LatLngExpression = [52.6310925, 13.49566709];
   const zoom = 17.5;
+  const markerIcon = new Icon({
+    iconUrl: markerIconPng.src,
+    iconSize: [markerIconPng.width, markerIconPng.height] as PointExpression,
+    iconAnchor: [markerIconPng.width / 2, markerIconPng.height / 2],
+  });
   const markerPosition: LatLngExpression = [52.6310925, 13.49566709];
 
   const rectangle: LatLngBoundsExpression = [
     [52.631, 13.4956],
     [52.6314, 13.496],
   ];
+
+  const POSITION_CLASSES = {
+    bottomleft: "leaflet-bottom leaflet-left",
+    bottomright: "leaflet-bottom leaflet-right",
+    topleft: "leaflet-top leaflet-left",
+    topright: "leaflet-top leaflet-right",
+  };
 
   return (
     <MapContainer
@@ -56,19 +68,7 @@ export default function LeafletMap({}: Props) {
         </LayersControl.Overlay>
 
         <LayersControl.Overlay checked name="Marker with popup">
-          <Marker
-            position={markerPosition}
-            icon={
-              new Icon({
-                iconUrl: markerIconPng.src,
-                iconSize: [
-                  markerIconPng.width,
-                  markerIconPng.height,
-                ] as PointExpression,
-                iconAnchor: [markerIconPng.width / 2, markerIconPng.height / 2],
-              })
-            }
-          >
+          <Marker position={markerPosition} icon={markerIcon}>
             <Popup>
               A pretty CSS3 popup.
               <br />
@@ -77,6 +77,7 @@ export default function LeafletMap({}: Props) {
           </Marker>
         </LayersControl.Overlay>
       </LayersControl>
+      <MinimapControl position="topright" />
     </MapContainer>
   );
 }
