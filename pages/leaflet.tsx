@@ -1,7 +1,14 @@
 import type { NextPage } from "next";
-import LeafletMap from "../components/shared/leaflet-map/LeafletMap";
+import dynamic from "next/dynamic";
 
 const D3Page: NextPage = () => {
+  const LeafletMapLazy = dynamic(
+    () => import("../components/shared/leaflet-map/LeafletMap"),
+    {
+      loading: () => <p>A map is loading</p>,
+      ssr: false,
+    }
+  );
   return (
     <>
       <div className="flex justify-center py-8">
@@ -10,7 +17,7 @@ const D3Page: NextPage = () => {
         </h1>
       </div>
       <div className="flex justify-center">
-        <LeafletMap />
+        <LeafletMapLazy />
       </div>
     </>
   );
