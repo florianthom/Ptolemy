@@ -1,11 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  MapContainer,
-  Rectangle,
-  TileLayer,
-  useMap,
-  useMapEvent,
-} from "react-leaflet";
+import { Rectangle, useMap, useMapEvent } from "react-leaflet";
+import { useEventHandlers } from "@react-leaflet/core";
 import "leaflet/dist/leaflet.css";
 
 type Props = { parentMap: L.Map; zoom: number };
@@ -36,6 +31,8 @@ export default function LeafletMap({ parentMap, zoom }: Props) {
 
   // Listen to events on the parent map
   const handlers = useMemo(() => ({ move: onChange, zoom: onChange }), []);
+
+  // @ts-ignore
   useEventHandlers({ instance: parentMap }, handlers);
 
   return <Rectangle bounds={bounds} pathOptions={BOUNDS_STYLE} />;

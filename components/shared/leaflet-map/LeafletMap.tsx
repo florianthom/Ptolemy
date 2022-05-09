@@ -33,13 +33,6 @@ export default function LeafletMap({}: Props) {
     [52.6314, 13.496],
   ];
 
-  const POSITION_CLASSES = {
-    bottomleft: "leaflet-bottom leaflet-left",
-    bottomright: "leaflet-bottom leaflet-right",
-    topleft: "leaflet-top leaflet-left",
-    topright: "leaflet-top leaflet-right",
-  };
-
   return (
     <MapContainer
       center={initialCenter}

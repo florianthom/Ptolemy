@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import MinimapBounds from "./MinimapBounds";
 
 type Props = { position: number[]; zoom: number };
 
@@ -9,6 +10,13 @@ export default function LeafletMap({ position, zoom }: Props) {
 
   const parentMap = useMap();
   const mapZoom = zoom || 0;
+
+  const POSITION_CLASSES = {
+    bottomleft: "leaflet-bottom leaflet-left",
+    bottomright: "leaflet-bottom leaflet-right",
+    topleft: "leaflet-top leaflet-left",
+    topright: "leaflet-top leaflet-right",
+  };
 
   // Memoize the minimap so it's not affected by position changes
   const minimap = useMemo(
