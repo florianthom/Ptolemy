@@ -5,7 +5,7 @@ const D3Page: NextPage = () => {
   const LeafletMapLazy = dynamic(
     () => import("../components/shared/leaflet-map/LeafletMap"),
     {
-      loading: () => <p>A map is loading</p>,
+      loading: () => <p>A map is loading, a loading-spinner is missing.</p>,
       ssr: false,
     }
   );
