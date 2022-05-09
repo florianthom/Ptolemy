@@ -1,7 +1,16 @@
 import { useEffect } from "react";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import {
+  CircleMarker,
+  LayersControl,
+  MapContainer,
+  Marker,
+  Popup,
+  Rectangle,
+  TileLayer,
+  Tooltip,
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { LatLngExpression } from "leaflet";
+import { LatLngBoundsExpression, LatLngExpression } from "leaflet";
 import markerIconPng from "leaflet/dist/images/marker-icon.png";
 import { Icon, PointExpression } from "leaflet";
 
@@ -10,18 +19,19 @@ type Props = {};
 export default function LeafletMap({}: Props) {
   useEffect(() => {}, []);
 
-  const initialCenter: LatLngExpression = [
-    52.63109251312334, 13.495667095941126,
+  const initialCenter: LatLngExpression = [52.6310925, 13.49566709];
+  const zoom = 17.5;
+  const markerPosition: LatLngExpression = [52.6310925, 13.49566709];
+
+  const rectangle: LatLngBoundsExpression = [
+    [52.631, 13.4956],
+    [52.6314, 13.496],
   ];
-  const markerPosition: LatLngExpression = [
-    52.63109251312334, 13.495667095941126,
-  ];
-  console.log(markerIconPng);
 
   return (
     <MapContainer
       center={initialCenter}
-      zoom={17.5}
+      zoom={zoom}
       scrollWheelZoom={true}
       className="h-96 w-full"
     >
@@ -30,25 +40,43 @@ export default function LeafletMap({}: Props) {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-      <Marker
-        position={markerPosition}
-        icon={
-          new Icon({
-            iconUrl: markerIconPng.src,
-            iconSize: [
-              markerIconPng.width,
-              markerIconPng.height,
-            ] as PointExpression,
-            iconAnchor: [markerIconPng.width / 2, markerIconPng.height / 2],
-          })
-        }
-      >
-        <Popup>
-          A pretty CSS3 popup.
-          <br />
-          Easily customizable.
-        </Popup>
-      </Marker>
+      <LayersControl position="topright">
+        <LayersControl.Overlay name="Marker with popup">
+          <CircleMarker
+            center={initialCenter}
+            pathOptions={{ color: "black" }}
+            radius={20}
+          />
+        </LayersControl.Overlay>
+
+        <LayersControl.Overlay checked name="Rectangle">
+          <Rectangle bounds={rectangle} pathOptions={{ color: "black" }}>
+            <Tooltip sticky>sticky Tooltip for Polygon</Tooltip>
+          </Rectangle>
+        </LayersControl.Overlay>
+
+        <LayersControl.Overlay checked name="Marker with popup">
+          <Marker
+            position={markerPosition}
+            icon={
+              new Icon({
+                iconUrl: markerIconPng.src,
+                iconSize: [
+                  markerIconPng.width,
+                  markerIconPng.height,
+                ] as PointExpression,
+                iconAnchor: [markerIconPng.width / 2, markerIconPng.height / 2],
+              })
+            }
+          >
+            <Popup>
+              A pretty CSS3 popup.
+              <br />
+              Easily customizable.
+            </Popup>
+          </Marker>
+        </LayersControl.Overlay>
+      </LayersControl>
     </MapContainer>
   );
 }
