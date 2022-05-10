@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 
 const D3Page: NextPage = () => {
-  const LeafletMapLazy = dynamic(
+  const LeafletMapNoSSR = dynamic(
     () => import("../components/shared/leaflet-map/LeafletMap"),
     {
       loading: () => <p>A map is loading, a loading-spinner is missing.</p>,
@@ -17,7 +17,7 @@ const D3Page: NextPage = () => {
         </h1>
       </div>
       <div className="flex justify-center">
-        <LeafletMapLazy />
+        <LeafletMapNoSSR />
       </div>
     </>
   );

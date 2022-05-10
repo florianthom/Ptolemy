@@ -13,7 +13,6 @@ import "leaflet/dist/leaflet.css";
 import { LatLngBoundsExpression, LatLngExpression } from "leaflet";
 import markerIconPng from "leaflet/dist/images/marker-icon.png";
 import { Icon, PointExpression } from "leaflet";
-import MinimapControl from "./MinimapControl";
 
 type Props = {};
 
