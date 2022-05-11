@@ -4,7 +4,6 @@ import OSM from "ol/source/OSM";
 import { RefObject } from "react";
 import "ol/ol.css";
 import { fromLonLat, Projection } from "ol/proj";
-import Interaction, { InteractionOptions } from "ol/interaction/Interaction";
 import { defaults } from "ol/interaction";
 import Draw from "ol/interaction/Draw";
 

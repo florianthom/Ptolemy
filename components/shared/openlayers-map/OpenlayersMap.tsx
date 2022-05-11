@@ -18,7 +18,7 @@ export default function OpenlayersMap({}: Props) {
 
   return (
     <>
-      <div id="map" ref={mapRef} className="h-192 w-full"></div>
+      <div id="map" ref={mapRef} className="h-screen w-full"></div>
     </>
   );
 }
