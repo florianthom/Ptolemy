@@ -2,9 +2,12 @@ import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import OpenlayersMap from "../components/shared/openlayers-map/OpenlayersMap";
 
-const Openlayers: NextPage = () => {
-  const OpenlayersMapNoSSR = dynamic(
-    () => import("../components/shared/openlayers-map/OpenlayersMap"),
+const DeckGL: NextPage = () => {
+  const OpenlayersOfflineMapNoSSR = dynamic(
+    () =>
+      import(
+        "../components/shared/openlayers-offline-map/OpenlayersOfflineMap"
+      ),
     {
       loading: () => <p>A map is loading, a loading-spinner is missing.</p>,
       ssr: false,
@@ -19,10 +22,10 @@ const Openlayers: NextPage = () => {
         </h1>
       </div>
       <div className="flex justify-center">
-        <OpenlayersMapNoSSR />
+        <OpenlayersOfflineMapNoSSR />
       </div>
     </>
   );
 };
 
-export default Openlayers;
+export default DeckGL;

@@ -6,6 +6,7 @@ import "ol/ol.css";
 import { fromLonLat, Projection } from "ol/proj";
 import { defaults } from "ol/interaction";
 import Draw from "ol/interaction/Draw";
+import { get as getProjection } from "ol/proj";
 
 export function renderMap(mapRef: RefObject<HTMLDivElement>): Map {
   const initialMap = new Map({
