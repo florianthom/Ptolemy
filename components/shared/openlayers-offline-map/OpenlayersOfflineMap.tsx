@@ -1,12 +1,7 @@
 import { Map, View } from "ol";
-import TileLayer from "ol/layer/Tile";
-import OSM from "ol/source/OSM";
 import { RefObject, useEffect, useRef } from "react";
 import "ol/ol.css";
-import { fromLonLat, Projection } from "ol/proj";
-import { defaults } from "ol/interaction";
-import Draw from "ol/interaction/Draw";
-import { get as getProjection } from "ol/proj";
+import { fromLonLat } from "ol/proj";
 import Style from "ol/style/Style";
 import Fill from "ol/style/Fill";
 import Stroke from "ol/style/Stroke";
@@ -17,6 +12,7 @@ import GeoJSON from "ol/format/GeoJSON";
 import { Geometry } from "ol/geom";
 import { FeatureLike } from "ol/Feature";
 
+// source: https://openlayers.org/en/latest/examples/rich-text-labels.html
 type Props = {};
 
 function createLayer(): VectorLayer<VectorSource<Geometry>> {
@@ -48,7 +44,7 @@ function createLayer(): VectorLayer<VectorSource<Geometry>> {
   const vectorLayer = new VectorLayer({
     background: "white",
     source: new VectorSource({
-      url: "https://openlayers.org/data/vector/us-states.json",
+      url: "us-states.geojson",
       format: new GeoJSON(),
     }),
     style: function (feature: FeatureLike) {
