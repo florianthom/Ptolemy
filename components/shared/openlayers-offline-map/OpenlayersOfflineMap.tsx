@@ -15,6 +15,7 @@ import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import GeoJSON from "ol/format/GeoJSON";
 import { Geometry } from "ol/geom";
+import { FeatureLike } from "ol/Feature";
 
 type Props = {};
 
@@ -31,6 +32,7 @@ function createLayer(): VectorLayer<VectorSource<Geometry>> {
       }),
     }),
   });
+
   const countryStyle = new Style({
     fill: new Fill({
       color: "rgba(255, 255, 255, 0.6)",
@@ -40,6 +42,7 @@ function createLayer(): VectorLayer<VectorSource<Geometry>> {
       width: 1,
     }),
   });
+
   const style = [countryStyle, labelStyle];
 
   const vectorLayer = new VectorLayer({
@@ -48,7 +51,7 @@ function createLayer(): VectorLayer<VectorSource<Geometry>> {
       url: "https://openlayers.org/data/vector/us-states.json",
       format: new GeoJSON(),
     }),
-    style: function (feature) {
+    style: function (feature: FeatureLike) {
       labelStyle
         .getText()
         .setText([
@@ -70,7 +73,6 @@ function createLayer(): VectorLayer<VectorSource<Geometry>> {
 function renderMap(mapRef: RefObject<HTMLDivElement>): Map {
   const initialMap = new Map({
     target: mapRef.current || undefined,
-    interactions: defaults({ mouseWheelZoom: false }),
     view: new View({
       center: fromLonLat([0, 0]),
       zoom: 2,
