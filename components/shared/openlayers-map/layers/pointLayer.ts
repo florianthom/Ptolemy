@@ -10,6 +10,7 @@ import { Point } from "ol/geom";
 import Stroke, { Options } from "ol/style/Stroke";
 import { fromLonLat, Projection } from "ol/proj";
 
+// https://openlayers.org/en/latest/examples/geographic.html
 export function pointLayer(): VectorLayer<VectorSource<Geometry>> {
   const point = new Point(fromLonLat([13.49566709, 52.6310925]));
 

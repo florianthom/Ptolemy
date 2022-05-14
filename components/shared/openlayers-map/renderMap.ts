@@ -11,8 +11,9 @@ import { get as getProjection } from "ol/proj";
 import { defaults as defaultControls, FullScreen } from "ol/control";
 import { rasterLayer } from "./layers/rasterLayer";
 import { drawLayer } from "./layers/drawLayer";
-import { createOverviewMapControl } from "./createOverviewMapControl";
+import { createOverviewMapControl } from "./controls/createOverviewMapControl";
 import { pointLayer } from "./layers/pointLayer";
+import { scaleControl } from "./controls/scaleControl";
 
 export function renderMap(mapRef: RefObject<HTMLDivElement>): Map {
   const map = new Map({
@@ -28,7 +29,12 @@ export function renderMap(mapRef: RefObject<HTMLDivElement>): Map {
         autoHide: false,
         className: "ml-96",
       },
-    }).extend([new ZoomSlider(), createOverviewMapControl(), new FullScreen()]),
+    }).extend([
+      new ZoomSlider(),
+      createOverviewMapControl(),
+      new FullScreen(),
+      scaleControl(),
+    ]),
     view: new View({
       center: fromLonLat([13.49566709, 52.6310925]),
       zoom: 8.5,

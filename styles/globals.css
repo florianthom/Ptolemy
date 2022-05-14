@@ -41,3 +41,7 @@ body {
   right: 1px;
   top: 1px;
 }
+
+.ol-scale-line {
+  transform: translate(125%, 0);
+}
