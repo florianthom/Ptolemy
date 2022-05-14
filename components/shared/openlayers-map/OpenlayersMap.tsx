@@ -13,8 +13,6 @@ export default function OpenlayersMap({}: Props) {
   const mapRef = useRef<HTMLDivElement>(null);
   let map: Map;
 
-  // useGeographic();
-
   useEffect(() => {
     if (calledOnce.current) return;
 

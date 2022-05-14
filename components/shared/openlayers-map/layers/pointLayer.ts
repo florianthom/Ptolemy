@@ -8,9 +8,10 @@ import { Circle } from "ol/style";
 import Fill from "ol/style/Fill";
 import { Point } from "ol/geom";
 import Stroke, { Options } from "ol/style/Stroke";
+import { fromLonLat, Projection } from "ol/proj";
 
 export function pointLayer(): VectorLayer<VectorSource<Geometry>> {
-  const point = new Point([13.49566709, 52.6310925]);
+  const point = new Point(fromLonLat([13.49566709, 52.6310925]));
 
   const pointLayer = new VectorLayer({
     source: new VectorSource({
@@ -18,12 +19,12 @@ export function pointLayer(): VectorLayer<VectorSource<Geometry>> {
     }),
     style: new Style({
       image: new Circle({
-        radius: 20000,
-        fill: new Fill({ color: "red" }),
-        // stroke: new Stroke({
-        //   color: "#ffcc00",
-        //   // opacity: 0.4,
-        // }),
+        radius: 3,
+        fill: new Fill({ color: "black" }),
+        stroke: new Stroke({
+          color: "rgba(255,255,255,0.5)",
+          width: 150,
+        }),
       }),
     }),
   });
