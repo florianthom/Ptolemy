@@ -11,12 +11,16 @@ import { get as getProjection } from "ol/proj";
 import { defaults as defaultControls } from "ol/control";
 import { rasterLayer } from "./layers/rasterLayer";
 import { drawLayer } from "./layers/drawLayer";
+import { createOverviewMapControl } from "./createOverviewMapControl";
 
 export function renderMap(mapRef: RefObject<HTMLDivElement>): Map {
   const map = new Map({
     target: mapRef.current || undefined,
     interactions: defaults({ mouseWheelZoom: false }),
-    controls: defaultControls().extend([new ZoomSlider()]),
+    controls: defaultControls().extend([
+      new ZoomSlider(),
+      createOverviewMapControl(),
+    ]),
     view: new View({
       center: fromLonLat([13.49566709, 52.6310925]),
       zoom: 8.5,
