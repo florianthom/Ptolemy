@@ -5,13 +5,12 @@ import VectorLayer from "ol/layer/Vector";
 import OSM from "ol/source/OSM";
 import VectorSource from "ol/source/Vector";
 import { Map } from "ol";
+import { none } from "ol/centerconstraint";
+
+const source = new VectorSource({ wrapX: false });
 
 // global so we can remove it later
 export let draw: Draw;
-
-// const typeSelect = document.getElementById("type") as HTMLSelectElement;
-
-const source = new VectorSource({ wrapX: false });
 
 export function addInteraction(map: Map, value: string) {
   if (value !== "None") {
@@ -25,9 +24,7 @@ export function addInteraction(map: Map, value: string) {
 }
 
 export function drawLayer(): VectorLayer<VectorSource<Geometry>> {
-  const vector = new VectorLayer({
+  return new VectorLayer({
     source: source,
   });
-
-  return vector;
 }

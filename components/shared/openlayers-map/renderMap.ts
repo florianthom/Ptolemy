@@ -13,16 +13,16 @@ import { rasterLayer } from "./layers/rasterLayer";
 import { drawLayer } from "./layers/drawLayer";
 
 export function renderMap(mapRef: RefObject<HTMLDivElement>): Map {
-  const initialMap = new Map({
+  const map = new Map({
     target: mapRef.current || undefined,
     interactions: defaults({ mouseWheelZoom: false }),
     controls: defaultControls().extend([new ZoomSlider()]),
     view: new View({
       center: fromLonLat([13.49566709, 52.6310925]),
       zoom: 8.5,
-      extent: [-572513.341856, 5211017.966314, 916327.095083, 6636950.728974],
+      // extent: [-572513.341856, 5211017.966314, 916327.095083, 6636950.728974],
     }),
     layers: [rasterLayer(), drawLayer()],
   });
-  return initialMap;
+  return map;
 }
