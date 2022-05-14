@@ -19,11 +19,16 @@ export function renderMap(mapRef: RefObject<HTMLDivElement>): Map {
     interactions: defaults({ mouseWheelZoom: false }).extend([
       new DragRotateAndZoom(),
     ]),
-    controls: defaultControls().extend([
-      new ZoomSlider(),
-      createOverviewMapControl(),
-      new FullScreen(),
-    ]),
+    controls: defaultControls({
+      attributionOptions: {
+        // collapsed: true,
+        collapsible: true,
+      },
+      rotateOptions: {
+        autoHide: false,
+        className: "ml-96",
+      },
+    }).extend([new ZoomSlider(), createOverviewMapControl(), new FullScreen()]),
     view: new View({
       center: fromLonLat([13.49566709, 52.6310925]),
       zoom: 8.5,
