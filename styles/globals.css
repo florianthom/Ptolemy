@@ -45,3 +45,7 @@ body {
 .ol-scale-line {
   transform: translate(125%, 0);
 }
+
+.ol-zoom .ol-zoom-out {
+  margin-top: 250px;
+}
