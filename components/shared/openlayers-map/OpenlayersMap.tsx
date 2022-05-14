@@ -14,6 +14,7 @@ export default function OpenlayersMap({}: Props) {
   let map: Map;
 
   // useGeographic();
+
   useEffect(() => {
     if (calledOnce.current) return;
 

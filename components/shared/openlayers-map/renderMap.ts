@@ -34,7 +34,7 @@ export function renderMap(mapRef: RefObject<HTMLDivElement>): Map {
       zoom: 8.5,
       // extent: [-572513.341856, 5211017.966314, 916327.095083, 6636950.728974],
     }),
-    layers: [rasterLayer(), drawLayer(), pointLayer()],
+    layers: [/*pointLayer(), */ rasterLayer(), drawLayer()],
   });
   return map;
 }

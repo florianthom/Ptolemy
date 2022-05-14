@@ -1,13 +1,12 @@
 import Geometry from "ol/geom/Geometry";
 import Draw from "ol/interaction/Draw";
-import VectorLayer from "ol/layer/Vector";
+import { Vector as VectorLayer } from "ol/layer";
 import VectorSource from "ol/source/Vector";
 import { Feature, Map } from "ol";
 import Style from "ol/style/Style";
 import { Circle } from "ol/style";
 import Fill from "ol/style/Fill";
 import { Point } from "ol/geom";
-
 import Stroke, { Options } from "ol/style/Stroke";
 
 export function pointLayer(): VectorLayer<VectorSource<Geometry>> {
@@ -19,15 +18,16 @@ export function pointLayer(): VectorLayer<VectorSource<Geometry>> {
     }),
     style: new Style({
       image: new Circle({
-        radius: 20,
+        radius: 20000,
         fill: new Fill({ color: "red" }),
-        stroke: new Stroke({
-          color: "#ffcc00",
-          opacity: 0.4,
-        } as Options),
+        // stroke: new Stroke({
+        //   color: "#ffcc00",
+        //   // opacity: 0.4,
+        // }),
       }),
     }),
   });
+  console.log(pointLayer);
 
   return pointLayer;
 }
