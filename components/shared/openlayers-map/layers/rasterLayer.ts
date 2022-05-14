@@ -7,6 +7,7 @@ export function rasterLayer() {
   return new TileLayer({
     source: new OSM({
       attributions: ATTRIBUTION,
+      transition: 250,
     }),
   });
 }
