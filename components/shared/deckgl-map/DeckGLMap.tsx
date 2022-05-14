@@ -1,11 +1,18 @@
 import { useEffect, useRef } from "react";
 import React from "react";
+// import { ViewStateProps } from "@deck.gl/core/lib/deck";
+// import { DeckGL } from "deck.gl";
+import DeckGL from "@deck.gl/react";
+import { LineLayer } from "@deck.gl/layers";
 
 type Props = {};
 
 export default function DeckGLMap({}: Props) {
   const calledOnce = useRef(false);
   const mapRef = useRef<HTMLDivElement>(null);
+
+  // Set your mapbox access token here
+  const MAPBOX_ACCESS_TOKEN = "your_mapbox_token";
 
   const INITIAL_VIEW_STATE = {
     longitude: -122.41669,
@@ -22,14 +29,22 @@ export default function DeckGLMap({}: Props) {
     },
   ];
 
+  const layers = [new LineLayer({ id: "line-layer", data })];
+
   useEffect(() => {
     if (calledOnce.current) return;
     calledOnce.current = true;
   }, [mapRef]);
 
   return (
-    <div className="">
-      <div id="map" ref={mapRef} className="h-96"></div>
+    // <>
+    <div id="map" ref={mapRef} className="h-96 w-full">
+      <DeckGL
+        initialViewState={INITIAL_VIEW_STATE}
+        controller={true}
+        layers={layers}
+      />
     </div>
+    // </>
   );
 }

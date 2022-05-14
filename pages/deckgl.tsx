@@ -1,13 +1,9 @@
 import type { NextPage } from "next";
 import dynamic from "next/dynamic";
-import OpenlayersMap from "../components/shared/openlayers-map/OpenlayersMap";
 
 const DeckGL: NextPage = () => {
-  const OpenlayersOfflineMapNoSSR = dynamic(
-    () =>
-      import(
-        "../components/shared/openlayers-offline-map/OpenlayersOfflineMap"
-      ),
+  const DeckGLMapNoSSR = dynamic(
+    () => import("../components/shared/deckgl-map/DeckGLMap"),
     {
       loading: () => <p>A map is loading, a loading-spinner is missing.</p>,
       ssr: false,
@@ -17,12 +13,10 @@ const DeckGL: NextPage = () => {
   return (
     <>
       <div className="flex justify-center py-8">
-        <h1 className="text-4xl font-medium">
-          Openlayers: Interactive maps on the web
-        </h1>
+        <h1 className="text-4xl font-medium">DeckGL: Interactive data maps</h1>
       </div>
       <div className="flex justify-center">
-        <OpenlayersOfflineMapNoSSR />
+        <DeckGLMapNoSSR />
       </div>
     </>
   );
