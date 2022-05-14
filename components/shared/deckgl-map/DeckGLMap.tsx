@@ -1,0 +1,35 @@
+import { useEffect, useRef } from "react";
+import React from "react";
+
+type Props = {};
+
+export default function DeckGLMap({}: Props) {
+  const calledOnce = useRef(false);
+  const mapRef = useRef<HTMLDivElement>(null);
+
+  const INITIAL_VIEW_STATE = {
+    longitude: -122.41669,
+    latitude: 37.7853,
+    zoom: 13,
+    pitch: 0,
+    bearing: 0,
+  };
+
+  const data = [
+    {
+      sourcePosition: [-122.41669, 37.7853],
+      targetPosition: [-122.41669, 37.781],
+    },
+  ];
+
+  useEffect(() => {
+    if (calledOnce.current) return;
+    calledOnce.current = true;
+  }, [mapRef]);
+
+  return (
+    <div className="">
+      <div id="map" ref={mapRef} className="h-96"></div>
+    </div>
+  );
+}
