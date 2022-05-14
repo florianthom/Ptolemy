@@ -38,7 +38,7 @@ export default function DeckGLMap({}: Props) {
 
   return (
     // <>
-    <div id="map" ref={mapRef} className="h-96 w-full">
+    <div id="map" ref={mapRef} className="h-screen w-full">
       <DeckGL
         initialViewState={INITIAL_VIEW_STATE}
         controller={true}
