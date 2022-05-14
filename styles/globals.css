@@ -46,6 +46,7 @@ body {
   transform: translate(125%, 0);
 }
 
+/* https://openlayers.org/en/latest/examples/zoomslider.html */
 .ol-zoom .ol-zoom-out {
   margin-top: 250px;
 }
