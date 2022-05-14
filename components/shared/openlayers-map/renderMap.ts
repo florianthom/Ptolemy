@@ -9,6 +9,7 @@ import Draw from "ol/interaction/Draw";
 import ZoomSlider from "ol/control/ZoomSlider";
 import { get as getProjection } from "ol/proj";
 import { defaults as defaultControls } from "ol/control";
+import { rasterLayer } from "./layers/rasterLayer";
 
 export function renderMap(mapRef: RefObject<HTMLDivElement>): Map {
   const initialMap = new Map({
@@ -20,11 +21,7 @@ export function renderMap(mapRef: RefObject<HTMLDivElement>): Map {
       zoom: 8.5,
       extent: [-572513.341856, 5211017.966314, 916327.095083, 6636950.728974],
     }),
-    layers: [
-      new TileLayer({
-        source: new OSM(),
-      }),
-    ],
+    layers: [rasterLayer()],
   });
   return initialMap;
 }
