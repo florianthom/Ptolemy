@@ -9,13 +9,6 @@ import Map from "react-map-gl";
 type Props = {};
 
 export default function DeckGLMap({}: Props) {
-  const calledOnce = useRef(false);
-  const mapRef = useRef<HTMLDivElement>(null);
-
-  // Set your mapbox access token here
-  // const MAPBOX_ACCESS_TOKEN =
-  //   "pk.eyJ1IjoiZmxvcmlhbnRob20iLCJhIjoiY2wzNjM4bGVxMHhmaTNncXN1cmZkbzVuOSJ9.BzyNp1u_R3gI43p4E-8JrA";
-
   // https://docs.mapbox.com/api/maps/styles/
   // mapStyle="mapbox://styles/mapbox/light-v10"
   // mapStyle="mapbox://styles/mapbox/dark-v10"
@@ -23,11 +16,26 @@ export default function DeckGLMap({}: Props) {
   const mapStyle = "mapbox://styles/mapbox/light-v10";
 
   const INITIAL_VIEW_STATE = {
-    longitude: -122.41669,
-    latitude: 37.7853,
-    zoom: 13,
-    pitch: 0,
+    latitude: 37.729,
+    longitude: -122.36,
+    zoom: 11,
     bearing: 0,
+    pitch: 50,
+  };
+
+  const settings = {
+    scrollZoom: true,
+    boxZoom: true,
+    dragRotate: true,
+    dragPan: true,
+    keyboard: true,
+    doubleClickZoom: true,
+    touchZoomRotate: true,
+    touchPitch: true,
+    minZoom: 0,
+    maxZoom: 20,
+    minPitch: 0,
+    maxPitch: 85,
   };
 
   const data = [
@@ -39,27 +47,19 @@ export default function DeckGLMap({}: Props) {
 
   const layers = [new LineLayer({ id: "line-layer", data })];
 
-  useEffect(() => {
-    if (calledOnce.current) return;
-    calledOnce.current = true;
-  }, [mapRef]);
-
   return (
     <>
-      <div id="map" ref={mapRef} className="h-screen w-full">
+      <div id="map" className="">
         <DeckGL
           initialViewState={INITIAL_VIEW_STATE}
           controller={true}
           layers={layers}
+          height={"50%"}
+          width={"100%"}
         >
           <Map
-            initialViewState={{
-              longitude: -100,
-              latitude: 40,
-              zoom: 3.5,
-            }}
-            style={{ width: 600, height: 400 }}
             mapStyle={mapStyle}
+            {...settings}
             mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
           />
         </DeckGL>
