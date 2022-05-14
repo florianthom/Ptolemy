@@ -1,32 +1,33 @@
 import Geometry from "ol/geom/Geometry";
 import Draw from "ol/interaction/Draw";
-import TileLayer from "ol/layer/Tile";
 import VectorLayer from "ol/layer/Vector";
-import OSM from "ol/source/OSM";
 import VectorSource from "ol/source/Vector";
-import { Map } from "ol";
-import { none } from "ol/centerconstraint";
+import { Feature, Map } from "ol";
+import Style from "ol/style/Style";
+import { Circle } from "ol/style";
+import Fill from "ol/style/Fill";
+import { Point } from "ol/geom";
 
-// source: https://openlayers.org/en/latest/examples/draw-freehand.html
+import Stroke, { Options } from "ol/style/Stroke";
 
-const vectorSource = new VectorSource({ wrapX: false });
+export function pointLayer(): VectorLayer<VectorSource<Geometry>> {
+  const point = new Point([13.49566709, 52.6310925]);
 
-// global so we can remove it later
-export let draw: Draw;
-
-export function addInteraction(map: Map, value: string) {
-  if (value !== "None") {
-    draw = new Draw({
-      source: vectorSource,
-      type: value,
-      freehand: true,
-    });
-    map.addInteraction(draw);
-  }
-}
-
-export function drawLayer(): VectorLayer<VectorSource<Geometry>> {
-  return new VectorLayer({
-    source: vectorSource,
+  const pointLayer = new VectorLayer({
+    source: new VectorSource({
+      features: [new Feature(point)],
+    }),
+    style: new Style({
+      image: new Circle({
+        radius: 20,
+        fill: new Fill({ color: "red" }),
+        stroke: new Stroke({
+          color: "#ffcc00",
+          opacity: 0.4,
+        } as Options),
+      }),
+    }),
   });
+
+  return pointLayer;
 }

@@ -12,6 +12,7 @@ import { defaults as defaultControls, FullScreen } from "ol/control";
 import { rasterLayer } from "./layers/rasterLayer";
 import { drawLayer } from "./layers/drawLayer";
 import { createOverviewMapControl } from "./createOverviewMapControl";
+import { pointLayer } from "./layers/pointLayer";
 
 export function renderMap(mapRef: RefObject<HTMLDivElement>): Map {
   const map = new Map({
@@ -21,7 +22,6 @@ export function renderMap(mapRef: RefObject<HTMLDivElement>): Map {
     ]),
     controls: defaultControls({
       attributionOptions: {
-        // collapsed: true,
         collapsible: true,
       },
       rotateOptions: {
@@ -34,7 +34,7 @@ export function renderMap(mapRef: RefObject<HTMLDivElement>): Map {
       zoom: 8.5,
       // extent: [-572513.341856, 5211017.966314, 916327.095083, 6636950.728974],
     }),
-    layers: [rasterLayer(), drawLayer()],
+    layers: [rasterLayer(), drawLayer(), pointLayer()],
   });
   return map;
 }

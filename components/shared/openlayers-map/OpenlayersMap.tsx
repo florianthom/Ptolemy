@@ -3,6 +3,7 @@ import React from "react";
 import { renderMap } from "./renderMap";
 import { Map } from "ol";
 import { addInteraction, draw } from "./layers/drawLayer";
+import { useGeographic } from "ol/proj";
 
 type Props = {};
 
@@ -12,8 +13,10 @@ export default function OpenlayersMap({}: Props) {
   const mapRef = useRef<HTMLDivElement>(null);
   let map: Map;
 
+  // useGeographic();
   useEffect(() => {
     if (calledOnce.current) return;
+
     calledOnce.current = true;
     map = renderMap(mapRef);
   }, [mapRef]);
