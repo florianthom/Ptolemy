@@ -4,7 +4,6 @@ import { OverviewMap } from "ol/control";
 
 export function createOverviewMapControl(): OverviewMap {
   const overviewMap = new OverviewMap({
-    // see in overviewmap-custom.html to see the custom CSS used
     className: "ol-overviewmap ol-custom-overviewmap",
     layers: [
       new TileLayer({
@@ -14,6 +13,7 @@ export function createOverviewMapControl(): OverviewMap {
     collapseLabel: "\u00BB",
     label: "\u00AB",
     collapsed: false,
+    rotateWithView: true,
   });
   return overviewMap;
 }

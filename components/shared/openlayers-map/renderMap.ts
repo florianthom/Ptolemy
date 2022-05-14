@@ -4,7 +4,7 @@ import OSM from "ol/source/OSM";
 import { RefObject } from "react";
 import "ol/ol.css";
 import { fromLonLat, Projection } from "ol/proj";
-import { defaults } from "ol/interaction";
+import { defaults, DragRotateAndZoom } from "ol/interaction";
 import Draw from "ol/interaction/Draw";
 import ZoomSlider from "ol/control/ZoomSlider";
 import { get as getProjection } from "ol/proj";
@@ -16,7 +16,9 @@ import { createOverviewMapControl } from "./createOverviewMapControl";
 export function renderMap(mapRef: RefObject<HTMLDivElement>): Map {
   const map = new Map({
     target: mapRef.current || undefined,
-    interactions: defaults({ mouseWheelZoom: false }),
+    interactions: defaults({ mouseWheelZoom: false }).extend([
+      new DragRotateAndZoom(),
+    ]),
     controls: defaultControls().extend([
       new ZoomSlider(),
       createOverviewMapControl(),
