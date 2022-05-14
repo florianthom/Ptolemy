@@ -7,7 +7,9 @@ import VectorSource from "ol/source/Vector";
 import { Map } from "ol";
 import { none } from "ol/centerconstraint";
 
-const source = new VectorSource({ wrapX: false });
+// source: https://openlayers.org/en/latest/examples/draw-freehand.html
+
+const vectorSource = new VectorSource({ wrapX: false });
 
 // global so we can remove it later
 export let draw: Draw;
@@ -15,7 +17,7 @@ export let draw: Draw;
 export function addInteraction(map: Map, value: string) {
   if (value !== "None") {
     draw = new Draw({
-      source: source,
+      source: vectorSource,
       type: value,
       freehand: true,
     });
@@ -25,6 +27,6 @@ export function addInteraction(map: Map, value: string) {
 
 export function drawLayer(): VectorLayer<VectorSource<Geometry>> {
   return new VectorLayer({
-    source: source,
+    source: vectorSource,
   });
 }
