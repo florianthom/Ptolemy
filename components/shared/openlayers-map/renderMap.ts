@@ -8,7 +8,7 @@ import { defaults, DragRotateAndZoom } from "ol/interaction";
 import Draw from "ol/interaction/Draw";
 import ZoomSlider from "ol/control/ZoomSlider";
 import { get as getProjection } from "ol/proj";
-import { defaults as defaultControls } from "ol/control";
+import { defaults as defaultControls, FullScreen } from "ol/control";
 import { rasterLayer } from "./layers/rasterLayer";
 import { drawLayer } from "./layers/drawLayer";
 import { createOverviewMapControl } from "./createOverviewMapControl";
@@ -22,6 +22,7 @@ export function renderMap(mapRef: RefObject<HTMLDivElement>): Map {
     controls: defaultControls().extend([
       new ZoomSlider(),
       createOverviewMapControl(),
+      new FullScreen(),
     ]),
     view: new View({
       center: fromLonLat([13.49566709, 52.6310925]),
