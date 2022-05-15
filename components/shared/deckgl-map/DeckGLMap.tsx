@@ -17,6 +17,7 @@ import { TripsLayer } from "deck.gl";
 import { Position } from "deck.gl";
 import { RGBAColor } from "deck.gl";
 import { Building } from "./types/building";
+import { Trip } from "./types/trip";
 
 type Props = {};
 
@@ -90,7 +91,7 @@ export default function DeckGLMap({}: Props) {
 
   const trailLength = 180;
   const loopLength = 1800;
-  const animationSpeed = 1;
+  const animationSpeed = 0.25;
 
   const [time, setTime] = useState(0);
   const [animation] = useState({});
@@ -128,7 +129,7 @@ export default function DeckGLMap({}: Props) {
     getFillColor: [0, 0, 0, 0],
   });
 
-  const tripsLayer = new TripsLayer({
+  const tripsLayer = new TripsLayer<Trip>({
     id: "trips",
     data: DATA_URL.TRIPS,
     getPath: (d) => d.path,
@@ -137,11 +138,10 @@ export default function DeckGLMap({}: Props) {
       d.vendor === 0 ? DEFAULT_THEME.trailColor0 : DEFAULT_THEME.trailColor1,
     opacity: 0.3,
     widthMinPixels: 2,
-    rounded: true,
+    capRounded: true,
+    jointRounded: true,
     trailLength,
     currentTime: time,
-
-    shadowEnabled: false,
   });
 
   const buildingsLayer = new PolygonLayer<Building>({
