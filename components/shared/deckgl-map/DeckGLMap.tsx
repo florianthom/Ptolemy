@@ -68,11 +68,12 @@ export default function DeckGLMap({}: Props) {
   };
 
   // https://docs.mapbox.com/api/maps/styles/
-  // mapStyle="mapbox://styles/mapbox/light-v10"
-  // mapStyle="mapbox://styles/mapbox/dark-v10"
-  // mapStyle="mapbox://styles/mapbox/outdoors-v11"
-  const mapStyle =
-    "https://basemaps.cartocdn.com/gl/dark-matter-nolabels-gl-style/style.json";
+  // mapbox://styles/mapbox/light-v10
+  // mapbox://styles/mapbox/dark-v10
+  // mapbox://styles/mapbox/outdoors-v11
+  // https://basemaps.cartocdn.com/gl/dark-matter-nolabels-gl-style/style.json
+  // mapbox://styles/florianthom/cl37enca8001x14o2i2w03mvo
+  const mapStyle = "mapbox://styles/florianthom/cl37enca8001x14o2i2w03mvo";
 
   const INITIAL_VIEW_STATE = {
     longitude: -74,
@@ -105,7 +106,6 @@ export default function DeckGLMap({}: Props) {
   const animate = () => {
     setTime((t) => (t + animationSpeed) % loopLength);
     animation.id = window.requestAnimationFrame(animate);
-    console.log(animation);
   };
 
   useEffect(() => {
@@ -153,7 +153,6 @@ export default function DeckGLMap({}: Props) {
     material: DEFAULT_THEME.material,
   });
 
-  // new LineLayer({ id: "line-layer", data });
   const layers = [groundLayer, tripsLayer, buildingsLayer];
 
   return (
