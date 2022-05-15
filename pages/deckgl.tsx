@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import dynamic from "next/dynamic";
+import DeckGLMap from "../components/shared/deckgl-map/DeckGLMap";
 
 const DeckGL: NextPage = () => {
   const DeckGLMapNoSSR = dynamic(

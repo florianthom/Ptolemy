@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import React from "react";
 import DeckGL from "@deck.gl/react";
 import { PolygonLayer } from "@deck.gl/layers";
-import Map, { FullscreenControl } from "react-map-gl";
+import ReactMap from "react-map-gl";
 import { AmbientLight } from "deck.gl";
 import { PointLight } from "deck.gl";
 import { LightingEffect } from "deck.gl";
@@ -15,6 +15,8 @@ import { AttributionControl } from "react-map-gl";
 import { createTripsLayer } from "./layers/tripsLayer";
 import { createGroundLayer } from "./layers/groundLayer";
 import { createBuildingsLayer } from "./layers/buildingsLayer";
+import mapboxgl, { Map } from "mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 type Props = {};
 
@@ -65,9 +67,23 @@ export default function DeckGLMap({}: Props) {
     animation.id = window.requestAnimationFrame(animate);
   };
 
+  const mapContainer = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     animation.id = window.requestAnimationFrame(animate);
-    return () => window.cancelAnimationFrame(animation.id);
+
+    const map = new Map({
+      container: mapContainer.current!,
+      style: "mapbox://styles/mapbox/streets-v11",
+      center: [-87.903982, 43.020403],
+      zoom: 12,
+      accessToken: process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN,
+    });
+
+    map.addControl(new mapboxgl.FullscreenControl());
+
+    // return () => window.cancelAnimationFrame(animation.id);
+    return () => map.remove();
   }, [animation]);
 
   const lightingEffect = new LightingEffect({ ambientLight, pointLight });
@@ -81,24 +97,13 @@ export default function DeckGLMap({}: Props) {
   ];
 
   return (
-    <>
-      <Map
-        reuseMaps
-        maxPitch={INITIAL_VIEW_STATE.maxPitch}
-        mapStyle={mapStyle}
-        styleDiffing={true}
-        attributionControl={false}
-        mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
-      >
-        <FullscreenControl />
-        <AttributionControl
-          customAttribution={""}
-          compact={true}
-          position={"top-right"}
-        />
-      </Map>
-      {/* </DeckGL>
-      </div> */}
-    </>
+    // <>
+    <div
+      id="map"
+      ref={mapContainer}
+      className="absolute top-0 bottom-0 w-full"
+      style={{ height: "100vh" }}
+    ></div>
+    // </>
   );
 }
