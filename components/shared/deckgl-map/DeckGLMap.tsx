@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import React from "react";
 import DeckGL from "@deck.gl/react";
 import { PolygonLayer } from "@deck.gl/layers";
-import Map from "react-map-gl";
+import Map, { FullscreenControl } from "react-map-gl";
 import { AmbientLight } from "deck.gl";
 import { PointLight } from "deck.gl";
 import { LightingEffect } from "deck.gl";
@@ -12,6 +12,9 @@ import { Building } from "./types/building";
 import { Trip } from "./types/trip";
 import { LandCover } from "./types/landCover";
 import { AttributionControl } from "react-map-gl";
+import { createTripsLayer } from "./layers/tripsLayer";
+import { createGroundLayer } from "./layers/groundLayer";
+import { createBuildingsLayer } from "./layers/buildingsLayer";
 
 type Props = {};
 
@@ -20,12 +23,6 @@ type Props = {};
 // https://ckochis.com/deck-gl-time-frame-animations
 
 export default function DeckGLMap({}: Props) {
-  // data
-  // https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/trips/buildings.json
-  // https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/trips/trips-v7.json
-  const BUILDINGS_URL = "buildings.json";
-  const TRIPS_URL = "trips-v7.json";
-
   const ambientLight = new AmbientLight({
     color: [255, 255, 255],
     intensity: 1.0,
@@ -36,23 +33,6 @@ export default function DeckGLMap({}: Props) {
     intensity: 2.0,
     position: [-74.05, 40.7, 8000],
   });
-
-  const lightingEffect = new LightingEffect({ ambientLight, pointLight });
-
-  const material = {
-    ambient: 0.1,
-    diffuse: 0.6,
-    shininess: 32,
-    specularColor: [60, 64, 70],
-  };
-
-  const DEFAULT_THEME = {
-    buildingColor: [74, 80, 87] as RGBAColor,
-    trailColor0: [253, 128, 93] as RGBAColor,
-    trailColor1: [23, 184, 190] as RGBAColor,
-    material,
-    effects: [lightingEffect],
-  };
 
   // https://docs.mapbox.com/api/maps/styles/
   // mapbox://styles/mapbox/light-v10
@@ -65,25 +45,13 @@ export default function DeckGLMap({}: Props) {
   const INITIAL_VIEW_STATE = {
     longitude: -74,
     latitude: 40.72,
-    zoom: 14,
+    zoom: 12.5,
     // default mapbox pitch: 60, can increase to 85 but not higher
-    maxPitch: 85,
-    pitch: 70,
+    maxPitch: 60,
+    pitch: 60,
     bearing: 0,
   };
 
-  const landCover: LandCover[] = [
-    {
-      path: [
-        [-74.0, 40.7],
-        [-74.02, 40.7],
-        [-74.02, 40.72],
-        [-74.0, 40.72],
-      ],
-    },
-  ];
-
-  const trailLength = 180;
   const loopLength = 1800;
   const animationSpeed = 0.25;
 
@@ -102,69 +70,35 @@ export default function DeckGLMap({}: Props) {
     return () => window.cancelAnimationFrame(animation.id);
   }, [animation]);
 
-  const groundLayer = new PolygonLayer<LandCover>({
-    id: "ground",
-    data: landCover,
-    getPolygon: (f) => f.path,
-    stroked: true,
-    filled: false,
-    // ignored since filled=false
-    getFillColor: [255, 255, 255] as RGBAColor,
-  });
+  const lightingEffect = new LightingEffect({ ambientLight, pointLight });
 
-  const tripsLayer = new TripsLayer<Trip>({
-    id: "trips",
-    data: TRIPS_URL,
-    getPath: (d) => d.path,
-    getTimestamps: (d) => d.timestamps,
-    getColor: (d) => {
-      return d.vendor === 0
-        ? DEFAULT_THEME.trailColor0
-        : DEFAULT_THEME.trailColor1;
-    },
-    opacity: 0.3,
-    widthMinPixels: 2,
-    capRounded: true,
-    jointRounded: true,
-    trailLength,
-    currentTime: time,
-  });
+  const effects = [lightingEffect];
 
-  const buildingsLayer = new PolygonLayer<Building>({
-    id: "buildings",
-    data: BUILDINGS_URL,
-    extruded: true,
-    wireframe: false,
-    opacity: 0.5,
-    getPolygon: (f) => f.polygon,
-    getElevation: (f) => f.height,
-    getFillColor: DEFAULT_THEME.buildingColor,
-    material: DEFAULT_THEME.material,
-  });
-
-  const layers = [groundLayer, tripsLayer, buildingsLayer];
+  const layers = [
+    createGroundLayer(),
+    createTripsLayer(time),
+    createBuildingsLayer(),
+  ];
 
   return (
     <>
-      <div id="map" className="relative my-16" style={{ height: "100vh" }}>
-        <DeckGL
-          initialViewState={INITIAL_VIEW_STATE}
-          effects={DEFAULT_THEME.effects}
-          layers={layers}
-          controller={{ scrollZoom: { smooth: true, speed: 0.01 } }}
-        >
-          <Map
-            reuseMaps
-            maxPitch={INITIAL_VIEW_STATE.maxPitch}
-            mapStyle={mapStyle}
-            styleDiffing={true}
-            attributionControl={false}
-            mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
-          >
-            <AttributionControl customAttribution={""} />
-          </Map>
-        </DeckGL>
-      </div>
+      <Map
+        reuseMaps
+        maxPitch={INITIAL_VIEW_STATE.maxPitch}
+        mapStyle={mapStyle}
+        styleDiffing={true}
+        attributionControl={false}
+        mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
+      >
+        <FullscreenControl />
+        <AttributionControl
+          customAttribution={""}
+          compact={true}
+          position={"top-right"}
+        />
+      </Map>
+      {/* </DeckGL>
+      </div> */}
     </>
   );
 }
