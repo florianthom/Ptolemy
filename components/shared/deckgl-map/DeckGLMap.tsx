@@ -21,6 +21,9 @@ import { Trip } from "./types/trip";
 
 type Props = {};
 
+// https://deck.gl/examples/trips-layer/
+// https://github.com/visgl/deck.gl/blob/8.7-release/examples/website/trips/app.js
+
 export default function DeckGLMap({}: Props) {
   // const data = [
   //   {
