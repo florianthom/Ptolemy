@@ -1,31 +1,17 @@
-import {
-  AnimationEvent,
-  AnimationEventHandler,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useState } from "react";
 import React from "react";
-// import { ViewStateProps } from "@deck.gl/core/lib/deck";
-// import { DeckGL } from "deck.gl";
 import DeckGL from "@deck.gl/react";
-import {
-  ArcLayer,
-  GeoJsonLayer,
-  LineLayer,
-  PolygonLayer,
-} from "@deck.gl/layers";
-import Map, { NavigationControl, Point } from "react-map-gl";
+import { PolygonLayer } from "@deck.gl/layers";
+import Map from "react-map-gl";
 import { AmbientLight } from "deck.gl";
 import { PointLight } from "deck.gl";
 import { LightingEffect } from "deck.gl";
 import { TripsLayer } from "deck.gl";
-import { Position } from "deck.gl";
 import { RGBAColor } from "deck.gl";
 import { Building } from "./types/building";
 import { Trip } from "./types/trip";
 import { LandCover } from "./types/landCover";
-import { AnimationOptions } from "mapbox-gl";
+import { AttributionControl } from "react-map-gl";
 
 type Props = {};
 
@@ -160,7 +146,7 @@ export default function DeckGLMap({}: Props) {
 
   return (
     <>
-      <div id="map" className="">
+      <div id="map" className="relative my-16" style={{ height: "100vh" }}>
         <DeckGL
           initialViewState={INITIAL_VIEW_STATE}
           effects={DEFAULT_THEME.effects}
@@ -172,8 +158,11 @@ export default function DeckGLMap({}: Props) {
             maxPitch={INITIAL_VIEW_STATE.maxPitch}
             mapStyle={mapStyle}
             styleDiffing={true}
+            attributionControl={false}
             mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
-          />
+          >
+            <AttributionControl customAttribution={""} />
+          </Map>
         </DeckGL>
       </div>
     </>
