@@ -1,4 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import {
+  AnimationEvent,
+  AnimationEventHandler,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import React from "react";
 // import { ViewStateProps } from "@deck.gl/core/lib/deck";
 // import { DeckGL } from "deck.gl";
@@ -19,6 +25,7 @@ import { RGBAColor } from "deck.gl";
 import { Building } from "./types/building";
 import { Trip } from "./types/trip";
 import { LandCover } from "./types/landCover";
+import { AnimationOptions } from "mapbox-gl";
 
 type Props = {};
 
@@ -91,33 +98,20 @@ export default function DeckGLMap({}: Props) {
   const animationSpeed = 0.25;
 
   const [time, setTime] = useState(0);
-  /////////////////////////////////////////
-  const [animation] = useState({} as Animation);
+
+  // possible type: Animation
+  const [animation] = useState({} as { id: number });
 
   const animate = () => {
     setTime((t) => (t + animationSpeed) % loopLength);
     animation.id = window.requestAnimationFrame(animate);
+    console.log(animation);
   };
 
   useEffect(() => {
     animation.id = window.requestAnimationFrame(animate);
     return () => window.cancelAnimationFrame(animation.id);
   }, [animation]);
-
-  // const settings = {
-  //   scrollZoom: true,
-  //   boxZoom: true,
-  //   dragRotate: true,
-  //   dragPan: true,
-  //   keyboard: true,
-  //   doubleClickZoom: true,
-  //   touchZoomRotate: true,
-  //   touchPitch: true,
-  //   minZoom: 0,
-  //   maxZoom: 20,
-  //   minPitch: 0,
-  //   maxPitch: 85,
-  // };
 
   const groundLayer = new PolygonLayer<LandCover>({
     id: "ground",
