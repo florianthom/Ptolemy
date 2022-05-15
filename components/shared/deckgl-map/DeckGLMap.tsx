@@ -134,8 +134,11 @@ export default function DeckGLMap({}: Props) {
     data: TRIPS_URL,
     getPath: (d) => d.path,
     getTimestamps: (d) => d.timestamps,
-    getColor: (d) =>
-      d.vendor === 0 ? DEFAULT_THEME.trailColor0 : DEFAULT_THEME.trailColor1,
+    getColor: (d) => {
+      return d.vendor === 0
+        ? DEFAULT_THEME.trailColor0
+        : DEFAULT_THEME.trailColor1;
+    },
     opacity: 0.3,
     widthMinPixels: 2,
     capRounded: true,
