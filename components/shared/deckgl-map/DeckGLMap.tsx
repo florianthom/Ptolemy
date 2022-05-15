@@ -31,6 +31,7 @@ type Props = {};
 
 // https://deck.gl/examples/trips-layer/
 // https://github.com/visgl/deck.gl/blob/8.7-release/examples/website/trips/app.js
+// https://ckochis.com/deck-gl-time-frame-animations
 
 export default function DeckGLMap({}: Props) {
   // data
@@ -162,7 +163,7 @@ export default function DeckGLMap({}: Props) {
           initialViewState={INITIAL_VIEW_STATE}
           effects={DEFAULT_THEME.effects}
           layers={layers}
-          controller={true}
+          controller={{ scrollZoom: { smooth: true, speed: 0.01 } }}
         >
           <Map
             reuseMaps
