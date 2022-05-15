@@ -107,3 +107,30 @@ export default function DeckGLMap({}: Props) {
     // </>
   );
 }
+
+// <>
+//   <div id="map" className="relative my-16" style={{ height: "100vh" }}>
+//     <DeckGL
+//       initialViewState={INITIAL_VIEW_STATE}
+//       effects={effects}
+//       layers={layers}
+//       controller={{ scrollZoom: false /*{ smooth: true, speed: 0.01 } */ }}
+//     >
+//       <ReactMap
+//         reuseMaps={true}
+//         maxPitch={INITIAL_VIEW_STATE.maxPitch}
+//         mapStyle={mapStyle}
+//         styleDiffing={true}
+//         attributionControl={false}
+//         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
+//       >
+//         <FullscreenControl />
+//         <AttributionControl
+//           customAttribution={""}
+//           compact={true}
+//           position={"top-right"}
+//         />
+//       </ReactMap>
+//     </DeckGL>
+//   </div>
+// </>;
