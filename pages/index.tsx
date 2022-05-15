@@ -4,7 +4,6 @@ import Image from "next/image";
 import Background from "../public/ptolemy.jpg";
 
 const HomePage: NextPage = () => {
-  console.log("rendered");
   return (
     <>
       <div className="flex justify-center items-center h-full py-8">
