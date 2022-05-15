@@ -79,8 +79,10 @@ export default function DeckGLMap({}: Props) {
   const INITIAL_VIEW_STATE = {
     longitude: -74,
     latitude: 40.72,
-    zoom: 13,
-    pitch: 45,
+    zoom: 14,
+    // default mapbox pitch: 60, can increase to 85 but not higher
+    maxPitch: 85,
+    pitch: 70,
     bearing: 0,
   };
 
@@ -167,6 +169,7 @@ export default function DeckGLMap({}: Props) {
         >
           <Map
             reuseMaps
+            maxPitch={INITIAL_VIEW_STATE.maxPitch}
             mapStyle={mapStyle}
             styleDiffing={true}
             mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
