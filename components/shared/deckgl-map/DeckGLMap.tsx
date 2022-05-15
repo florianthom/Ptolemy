@@ -9,7 +9,7 @@ import {
   LineLayer,
   PolygonLayer,
 } from "@deck.gl/layers";
-import Map, { NavigationControl } from "react-map-gl";
+import Map, { NavigationControl, Point } from "react-map-gl";
 import { AmbientLight } from "deck.gl";
 import { PointLight } from "deck.gl";
 import { LightingEffect } from "deck.gl";
@@ -18,6 +18,7 @@ import { Position } from "deck.gl";
 import { RGBAColor } from "deck.gl";
 import { Building } from "./types/building";
 import { Trip } from "./types/trip";
+import { LandCover } from "./types/landCover";
 
 type Props = {};
 
@@ -25,20 +26,11 @@ type Props = {};
 // https://github.com/visgl/deck.gl/blob/8.7-release/examples/website/trips/app.js
 
 export default function DeckGLMap({}: Props) {
-  // const data = [
-  //   {
-  //     sourcePosition: [-122.41669, 37.7853],
-  //     targetPosition: [-122.41669, 37.781],
-  //   },
-  // ];
-
-  // Source data CSV
-  const DATA_URL = {
-    BUILDINGS:
-      "https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/trips/buildings.json", // eslint-disable-line
-    TRIPS:
-      "https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/trips/trips-v7.json", // eslint-disable-line
-  };
+  // data
+  // https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/trips/buildings.json
+  // https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/trips/trips-v7.json
+  const BUILDINGS_URL = "buildings.json";
+  const TRIPS_URL = "trips-v7.json";
 
   const ambientLight = new AmbientLight({
     color: [255, 255, 255],
@@ -83,13 +75,15 @@ export default function DeckGLMap({}: Props) {
     bearing: 0,
   };
 
-  const landCover = [
-    [
-      [-74.0, 40.7],
-      [-74.02, 40.7],
-      [-74.02, 40.72],
-      [-74.0, 40.72],
-    ],
+  const landCover: LandCover[] = [
+    {
+      path: [
+        [-74.0, 40.7],
+        [-74.02, 40.7],
+        [-74.02, 40.72],
+        [-74.0, 40.72],
+      ],
+    },
   ];
 
   const trailLength = 180;
@@ -125,17 +119,19 @@ export default function DeckGLMap({}: Props) {
   //   maxPitch: 85,
   // };
 
-  const groundLayer = new PolygonLayer({
+  const groundLayer = new PolygonLayer<LandCover>({
     id: "ground",
     data: landCover,
-    getPolygon: (f) => f as Position[] | Position[][],
-    stroked: false,
-    getFillColor: [0, 0, 0, 0],
+    getPolygon: (f) => f.path,
+    stroked: true,
+    filled: false,
+    // ignored since filled=false
+    getFillColor: [255, 255, 255] as RGBAColor,
   });
 
   const tripsLayer = new TripsLayer<Trip>({
     id: "trips",
-    data: DATA_URL.TRIPS,
+    data: TRIPS_URL,
     getPath: (d) => d.path,
     getTimestamps: (d) => d.timestamps,
     getColor: (d) =>
@@ -150,7 +146,7 @@ export default function DeckGLMap({}: Props) {
 
   const buildingsLayer = new PolygonLayer<Building>({
     id: "buildings",
-    data: DATA_URL.BUILDINGS,
+    data: BUILDINGS_URL,
     extruded: true,
     wireframe: false,
     opacity: 0.5,
