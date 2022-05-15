@@ -15,6 +15,8 @@ import { PointLight } from "deck.gl";
 import { LightingEffect } from "deck.gl";
 import { TripsLayer } from "deck.gl";
 import { Position } from "deck.gl";
+import { RGBAColor } from "deck.gl";
+import { Building } from "./types/building";
 
 type Props = {};
 
@@ -55,9 +57,9 @@ export default function DeckGLMap({}: Props) {
   };
 
   const DEFAULT_THEME = {
-    buildingColor: [74, 80, 87],
-    trailColor0: [253, 128, 93],
-    trailColor1: [23, 184, 190],
+    buildingColor: [74, 80, 87] as RGBAColor,
+    trailColor0: [253, 128, 93] as RGBAColor,
+    trailColor1: [23, 184, 190] as RGBAColor,
     material,
     effects: [lightingEffect],
   };
@@ -142,7 +144,7 @@ export default function DeckGLMap({}: Props) {
     shadowEnabled: false,
   });
 
-  const buildingsLayer = new PolygonLayer({
+  const buildingsLayer = new PolygonLayer<Building>({
     id: "buildings",
     data: DATA_URL.BUILDINGS,
     extruded: true,
