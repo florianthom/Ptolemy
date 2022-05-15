@@ -94,7 +94,8 @@ export default function DeckGLMap({}: Props) {
   const animationSpeed = 0.25;
 
   const [time, setTime] = useState(0);
-  const [animation] = useState({});
+  /////////////////////////////////////////
+  const [animation] = useState({} as Animation);
 
   const animate = () => {
     setTime((t) => (t + animationSpeed) % loopLength);
