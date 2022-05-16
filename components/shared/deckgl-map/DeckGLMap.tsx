@@ -1,21 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import React from "react";
 import DeckGL from "@deck.gl/react";
-import { PolygonLayer } from "@deck.gl/layers";
 import ReactMap, { FullscreenControl, NavigationControl } from "react-map-gl";
 import { AmbientLight } from "deck.gl";
 import { PointLight } from "deck.gl";
 import { LightingEffect } from "deck.gl";
-import { TripsLayer } from "deck.gl";
-import { RGBAColor } from "deck.gl";
-import { Building } from "./types/building";
-import { Trip } from "./types/trip";
-import { LandCover } from "./types/landCover";
 import { AttributionControl } from "react-map-gl";
 import { createTripsLayer } from "./layers/tripsLayer";
 import { createGroundLayer } from "./layers/groundLayer";
 import { createBuildingsLayer } from "./layers/buildingsLayer";
-import mapboxgl, { LngLatLike, Map, MapboxOptions } from "mapbox-gl";
+import { Map } from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 type Props = {};

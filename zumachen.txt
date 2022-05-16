@@ -1,1 +1,5 @@
 source ico: https://www.shareicon.net/earth-maps-symbol-maps-and-flags-earth-icons-continents-shape-map-grid-674866
+
+- can click an map-box controls like fullscreen
+ - solution available for react-map-box v7, but not v8
+ - should be fixable later
