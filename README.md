@@ -51,8 +51,10 @@ This "Getting Started" section describes a sequence of steps which are needed to
 - ol v6.14 (openlayers)
 
 ## Some more insights
+### d3.js
 ![alt text](.github/images/d3World.PNG)
 
+### openlayers
 ![alt text](.github/images/openlayersOffline.PNG)
 
 ## Acknowledgements
