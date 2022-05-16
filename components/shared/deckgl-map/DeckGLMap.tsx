@@ -104,7 +104,7 @@ export default function DeckGLMap({}: Props) {
             attributionControl={false}
             mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
           >
-            <div className="absolute z-50">
+            <div className="">
               <FullscreenControl />
               <NavigationControl />
               <AttributionControl
