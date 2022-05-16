@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import React from "react";
 import DeckGL from "@deck.gl/react";
 import { PolygonLayer } from "@deck.gl/layers";
-import ReactMap, { FullscreenControl } from "react-map-gl";
+import ReactMap, { FullscreenControl, NavigationControl } from "react-map-gl";
 import { AmbientLight } from "deck.gl";
 import { PointLight } from "deck.gl";
 import { LightingEffect } from "deck.gl";
@@ -104,12 +104,15 @@ export default function DeckGLMap({}: Props) {
             attributionControl={false}
             mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
           >
-            <FullscreenControl />
-            <AttributionControl
-              customAttribution={""}
-              compact={true}
-              position={"top-right"}
-            />
+            <div className="absolute z-50">
+              <FullscreenControl />
+              <NavigationControl />
+              <AttributionControl
+                customAttribution={""}
+                compact={true}
+                position={"bottom-right"}
+              />
+            </div>
           </ReactMap>
         </DeckGL>
       </div>
