@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import React from "react";
 import DeckGL from "@deck.gl/react";
 import { PolygonLayer } from "@deck.gl/layers";
-import ReactMap from "react-map-gl";
+import ReactMap, { FullscreenControl } from "react-map-gl";
 import { AmbientLight } from "deck.gl";
 import { PointLight } from "deck.gl";
 import { LightingEffect } from "deck.gl";
@@ -15,7 +15,7 @@ import { AttributionControl } from "react-map-gl";
 import { createTripsLayer } from "./layers/tripsLayer";
 import { createGroundLayer } from "./layers/groundLayer";
 import { createBuildingsLayer } from "./layers/buildingsLayer";
-import mapboxgl, { Map } from "mapbox-gl";
+import mapboxgl, { LngLatLike, Map, MapboxOptions } from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 type Props = {};
@@ -69,21 +69,12 @@ export default function DeckGLMap({}: Props) {
 
   const mapContainer = useRef<HTMLDivElement>(null);
 
+  let map: Map;
+
   useEffect(() => {
     animation.id = window.requestAnimationFrame(animate);
 
-    const map = new Map({
-      container: mapContainer.current!,
-      style: "mapbox://styles/mapbox/streets-v11",
-      center: [-87.903982, 43.020403],
-      zoom: 12,
-      accessToken: process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN,
-    });
-
-    map.addControl(new mapboxgl.FullscreenControl());
-
-    // return () => window.cancelAnimationFrame(animation.id);
-    return () => map.remove();
+    return () => window.cancelAnimationFrame(animation.id);
   }, [animation]);
 
   const lightingEffect = new LightingEffect({ ambientLight, pointLight });
@@ -97,40 +88,55 @@ export default function DeckGLMap({}: Props) {
   ];
 
   return (
-    // <>
-    <div
-      id="map"
-      ref={mapContainer}
-      className="absolute top-0 bottom-0 w-full"
-      style={{ height: "100vh" }}
-    ></div>
-    // </>
+    <>
+      <div id="map" className="relative my-16" style={{ height: "100vh" }}>
+        <DeckGL
+          initialViewState={INITIAL_VIEW_STATE}
+          effects={effects}
+          layers={layers}
+          controller={{ scrollZoom: false /*{ smooth: true, speed: 0.01 } */ }}
+        >
+          <ReactMap
+            reuseMaps={true}
+            maxPitch={INITIAL_VIEW_STATE.maxPitch}
+            mapStyle={mapStyle}
+            styleDiffing={true}
+            attributionControl={false}
+            mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
+          >
+            <FullscreenControl />
+            <AttributionControl
+              customAttribution={""}
+              compact={true}
+              position={"top-right"}
+            />
+          </ReactMap>
+        </DeckGL>
+      </div>
+    </>
   );
 }
 
+// const mapOptions: MapboxOptions = {
+//   container: mapContainer.current!,
+//   maxPitch: INITIAL_VIEW_STATE.maxPitch,
+//   style: mapStyle,
+//   attributionControl: false,
+//   center: [-87.903982, 43.020403] as LngLatLike,
+//   zoom: 12,
+//   accessToken: process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN,
+// };
+
+// map = new Map(mapOptions);
+// map.addControl(new mapboxgl.FullscreenControl());
+// map.addLayer(...);
+// return () => map.remove();
+
 // <>
-//   <div id="map" className="relative my-16" style={{ height: "100vh" }}>
-//     <DeckGL
-//       initialViewState={INITIAL_VIEW_STATE}
-//       effects={effects}
-//       layers={layers}
-//       controller={{ scrollZoom: false /*{ smooth: true, speed: 0.01 } */ }}
-//     >
-//       <ReactMap
-//         reuseMaps={true}
-//         maxPitch={INITIAL_VIEW_STATE.maxPitch}
-//         mapStyle={mapStyle}
-//         styleDiffing={true}
-//         attributionControl={false}
-//         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
-//       >
-//         <FullscreenControl />
-//         <AttributionControl
-//           customAttribution={""}
-//           compact={true}
-//           position={"top-right"}
-//         />
-//       </ReactMap>
-//     </DeckGL>
-//   </div>
-// </>;
+//   <div
+//     id="map"
+//     ref={mapContainer}
+//     className="absolute top-0 bottom-0 w-full"
+//     style={{ height: "100vh" }}
+//   ></div>
+// </>
