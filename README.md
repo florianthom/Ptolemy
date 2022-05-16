@@ -51,12 +51,12 @@ This "Getting Started" section describes a sequence of steps which are needed to
 - ol v6.14 (openlayers)
 
 ## Some more insights
-### d3.js
+- d3.js
 ![alt text](.github/images/d3World.PNG)
 
-### openlayers
+- openlayers
 ![alt text](.github/images/openlayersOffline.PNG)
 
-## Acknowledgements
+- Acknowledgements
 
 Thanks to all the great introductions to the individual map-providers. There are many really great articles about the creation of static and dynamic maps out there. If you want to, you can check out the article by Craig Kochis [here](https://ckochis.com/deck-gl-time-frame-animations). His article is just amazing.
