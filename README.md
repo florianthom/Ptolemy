@@ -50,6 +50,11 @@ This "Getting Started" section describes a sequence of steps which are needed to
 - mapbox gl v2.8 && react-map-gl v7
 - ol v6.14 (openlayers)
 
+## Some more insights
+![alt text](.github/images/d3World.PNG)
+
+![alt text](.github/images/openlayersOffline.PNG)
+
 ## Acknowledgements
 
 Thanks to all the great introductions to the individual map-providers. There are many really great articles about the creation of static and dynamic maps out there. If you want to, you can check out the article by Craig Kochis [here](https://ckochis.com/deck-gl-time-frame-animations). His article is just amazing.
